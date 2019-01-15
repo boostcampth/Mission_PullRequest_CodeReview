@@ -9,6 +9,7 @@ import com.example.yeseul.movieapp.mapper.MovieMapper;
 import com.example.yeseul.movieapp.pojo.Movie;
 import com.example.yeseul.movieapp.view.adapter.AdapterContract;
 
+import java.net.URLEncoder;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -76,7 +77,14 @@ public class MainPresenter implements MainContract.Presenter {
 
         isLoading.set(true);
 
-        repository.searchMovies(MovieMapper.toRequest(searchKey, PAGE_UNIT, (PAGE_UNIT * currentPage++) + 1))
+        String encodedSearchKey="";
+        try {
+            encodedSearchKey = URLEncoder.encode(searchKey, "UTF-8");
+        }catch(Exception e){
+
+        }
+
+        repository.searchMovies(MovieMapper.toRequest(encodedSearchKey, PAGE_UNIT, (PAGE_UNIT * currentPage++) + 1))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {
 
