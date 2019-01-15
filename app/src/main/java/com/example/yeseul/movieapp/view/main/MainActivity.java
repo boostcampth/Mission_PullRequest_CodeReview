@@ -56,11 +56,11 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
         binding.recyclerMovie.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         // 최하단 스크롤 감지
-        binding.recyclerMovie.setOnScrollListener(new RecyclerView.OnScrollListener(){
+        binding.recyclerMovie.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if(!binding.recyclerMovie.canScrollVertically(1)){
+                if(!binding.recyclerMovie.canScrollVertically(RecyclerView.FOCUS_DOWN)){
                     presenter.loadItems(false);
                 }
             }
