@@ -1,5 +1,7 @@
 package com.example.yeseul.movieapp.pojo;
 
+import android.databinding.ObservableBoolean;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -36,6 +38,9 @@ public class Movie {
     @SerializedName("userRating")
     @Expose
     private String userRating;
+
+    @Expose(serialize = false, deserialize = false)
+    public ObservableBoolean noExpand = new ObservableBoolean();
 
     public String getTitle() {
         return title;
@@ -78,7 +83,7 @@ public class Movie {
     }
 
     public String getDirector() {
-        return director;
+        return director.replace("|", " | ");
     }
 
     public void setDirector(String director) {
@@ -86,7 +91,7 @@ public class Movie {
     }
 
     public String getActor() {
-        return actor;
+        return actor.replace("|", " | ");
     }
 
     public void setActor(String actor) {
