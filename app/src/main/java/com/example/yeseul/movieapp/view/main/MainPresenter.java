@@ -78,10 +78,12 @@ public class MainPresenter implements MainContract.Presenter {
 
         repository.searchMovies(MovieMapper.toRequest(searchKey, PAGE_UNIT, (PAGE_UNIT * currentPage++) + 1))
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(response -> {
-
+                .doAfterTerminate(() -> {
                     // 로딩 flag OFF
                     isLoading.set(false);
+                })
+                .subscribe(response -> {
+
 
                     List<Movie> movieList = response.getMovieList();
 
@@ -102,9 +104,6 @@ public class MainPresenter implements MainContract.Presenter {
                     adapterModel.addItems(movieList);
 
                 }, error -> {
-
-                    // 로딩 flag OFF
-                    isLoading.set(false);
                     // 페이지 끝 flag ON
                     isEndOfPage = true;
                     // 뷰에 알리기
