@@ -7,75 +7,98 @@
             name="item"
             type="com.example.yeseul.movieapp.pojo.Movie"/>
     </data>
-
     <LinearLayout
-        android:padding="@dimen/padding_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="75dp"
-            android:layout_height="100dp"
-            imageCenterCrop="@{item.imageUrl}"/>
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/mini_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/text_size_small"
+            android:textSize="@dimen/text_size_main"
+            android:textColor="@android:color/black"
+            android:visibility="@{!item.noExpand}"
+            boldText="@{item.title}"/>
 
         <LinearLayout
-            android:layout_marginLeft="@dimen/padding_main"
-            android:layout_marginStart="@dimen/padding_main"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:id="@+id/main_content"
+            android:padding="@dimen/padding_main"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:gravity="center_vertical"
+            android:visibility="@{item.noExpand}"
+            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="match_parent"
+            <ImageView
+                android:layout_width="75dp"
+                android:layout_height="100dp"
+                imageCenterCrop="@{item.imageUrl}"/>
+
+            <LinearLayout
+                android:layout_marginLeft="@dimen/padding_main"
+                android:layout_marginStart="@dimen/padding_main"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_main"
-                android:textColor="@android:color/black"
-                android:maxLines="2"
-                android:ellipsize="end"
-                android:lineSpacingExtra="@dimen/padding_ultra_small"
-                boldText="@{item.title}"/>
+                android:orientation="vertical">
 
-            <RatingBar
-                style="@style/ratingBar"
-                android:layout_marginTop="@dimen/padding_ultra_small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:rating="@{item.userRating}"
-                android:stepSize="0.5"
-                android:numStars="5"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_main"
+                    android:textColor="@android:color/black"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:lineSpacingExtra="@dimen/padding_ultra_small"
+                    boldText="@{item.title}"/>
 
-            <TextView
-                android:layout_marginTop="@dimen/padding_ultra_small"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_small"
-                android:textColor="@android:color/black"
-                android:text="@{item.pubDate}"/>
+                <RatingBar
+                    style="@style/ratingBar"
+                    android:layout_marginTop="@dimen/padding_ultra_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:rating="@{item.userRating}"
+                    android:stepSize="0.5"
+                    android:numStars="5"/>
 
-            <TextView
-                android:layout_marginTop="@dimen/padding_ultra_small"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:ellipsize="end"
-                android:textSize="@dimen/text_size_small"
-                android:textColor="@android:color/black"
-                boldText="@{item.director}"/>
+                <TextView
+                    android:layout_marginTop="@dimen/padding_ultra_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_small"
+                    android:textColor="@android:color/black"
+                    android:text="@{item.pubDate}"/>
 
-            <TextView
-                android:layout_marginTop="@dimen/padding_ultra_small"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="2"
-                android:ellipsize="end"
-                android:lineSpacingExtra="@dimen/padding_ultra_small"
-                android:textSize="@dimen/text_size_small"
-                android:textColor="@android:color/black"
-                boldText="@{item.actor}"/>
+                <TextView
+                    android:layout_marginTop="@dimen/padding_ultra_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textSize="@dimen/text_size_small"
+                    android:textColor="@android:color/black"
+                    boldText="@{item.director}"/>
 
+                <TextView
+                    android:layout_marginTop="@dimen/padding_ultra_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:lineSpacingExtra="@dimen/padding_ultra_small"
+                    android:textSize="@dimen/text_size_small"
+                    android:textColor="@android:color/black"
+                    boldText="@{item.actor}"/>
+                <TextView
+                    android:id="@+id/fold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fold"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@android:color/holo_blue_dark"/>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </layout>

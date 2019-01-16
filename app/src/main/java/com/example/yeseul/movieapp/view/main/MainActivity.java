@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.customtabs.CustomTabsIntent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -56,11 +57,11 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
         binding.recyclerMovie.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         // 최하단 스크롤 감지
-        binding.recyclerMovie.setOnScrollListener(new RecyclerView.OnScrollListener(){
+        binding.recyclerMovie.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if(!binding.recyclerMovie.canScrollVertically(1)){
+                if(!binding.recyclerMovie.canScrollVertically(RecyclerView.FOCUS_DOWN)){
                     presenter.loadItems(false);
                 }
             }
@@ -77,6 +78,22 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
 
         // 검색 버튼 리스너 등록
         binding.searchBox.btnSubmit.setOnClickListener(v -> onSearchButtonClicked());
+        binding.searchBox.tvGenre.setOnClickListener(v -> onGenreButtonClicked());
+    }
+
+    /**
+     * 장르 텍스트 눌렀을 때 호출 */
+    private void onGenreButtonClicked() {
+        new AlertDialog.Builder(this)
+                .setTitle("장르")
+                .setCancelable(false)
+                .setSingleChoiceItems(R.array.genres, presenter.getGenre(), (dialog, which) -> {
+                    String genre = getResources().getStringArray(R.array.genres)[which];
+                    presenter.setGenre(genre, which);
+                    dialog.cancel();
+                })
+                .create()
+                .show();
     }
 
     /**
