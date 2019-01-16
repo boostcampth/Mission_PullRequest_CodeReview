@@ -21,5 +21,9 @@ public interface MainContract {
         void setAdapterView(AdapterContract.View adapterView);
 
         void setAdapterModel(AdapterContract.Model<Movie> adapterModel);
+
+        int getGenre();
+
+        void setGenre(String genre, int which);
     }
 }

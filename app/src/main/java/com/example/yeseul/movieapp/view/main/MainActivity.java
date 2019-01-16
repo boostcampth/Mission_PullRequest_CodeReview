@@ -1,5 +1,6 @@
 package com.example.yeseul.movieapp.view.main;
 
+import android.app.AlertDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -77,6 +78,21 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
 
         // 검색 버튼 리스너 등록
         binding.searchBox.btnSubmit.setOnClickListener(v -> onSearchButtonClicked());
+        binding.searchBox.tvGenre.setOnClickListener(v -> onGenreButtonClicked());
+    }
+
+    /**
+     * 장르 텍스트 눌렀을 때 호출 */
+    private void onGenreButtonClicked() {
+        new AlertDialog.Builder(this)
+                .setTitle("장르")
+                .setSingleChoiceItems(R.array.genres, presenter.getGenre(), (dialog, which) -> {
+                    String genre = getResources().getStringArray(R.array.genres)[which];
+                    presenter.setGenre(genre, which);
+                })
+                .setPositiveButton("확인", null)
+                .create()
+                .show();
     }
 
     /**

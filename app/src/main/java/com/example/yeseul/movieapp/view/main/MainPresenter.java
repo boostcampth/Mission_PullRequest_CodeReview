@@ -16,6 +16,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 public class MainPresenter implements MainContract.Presenter {
 
     public final ObservableBoolean isLoading = new ObservableBoolean(false); // 로딩 중 flag 바인딩
+    public final ObservableField<String> genreStr = new ObservableField<>("전체"); // 장르 텍스트
 
     private MainContract.View view;
     private MovieRepository repository;
@@ -27,6 +28,8 @@ public class MainPresenter implements MainContract.Presenter {
     private int currentPage = 0; // 현재 페이지 index
     private boolean isEndOfPage = false; // 페이지 끝 flag
 
+    private int genre = 0; // 장르 번호
+
     public MainPresenter(MainContract.View view, MovieRepository repository) {
         this.view = view;
         this.repository = repository;
@@ -35,6 +38,17 @@ public class MainPresenter implements MainContract.Presenter {
     @Override
     public void onViewCreated() {
         // do nothing
+    }
+
+    @Override
+    public int getGenre() {
+        return genre;
+    }
+
+    @Override
+    public void setGenre(String genre, int which) {
+        this.genreStr.set(genre);
+        this.genre = which;
     }
 
     @Override
@@ -76,7 +90,7 @@ public class MainPresenter implements MainContract.Presenter {
 
         isLoading.set(true);
 
-        repository.searchMovies(MovieMapper.toRequest(searchKey, PAGE_UNIT, (PAGE_UNIT * currentPage++) + 1))
+        repository.searchMovies(MovieMapper.toRequest(searchKey, PAGE_UNIT, (PAGE_UNIT * currentPage++) + 1, genre))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {
 

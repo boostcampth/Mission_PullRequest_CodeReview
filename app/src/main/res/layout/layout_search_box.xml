@@ -29,7 +29,14 @@
             android:textColor="@android:color/black"
             android:textSize="@dimen/text_size_main"
             android:gravity="center_vertical"/>
-
+        <TextView
+            android:id="@+id/tv_genre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_border"
+            android:padding="8dp"
+            android:text="@{presenter.genreStr}"
+            android:textSize="@dimen/text_size_main"/>
         <Button
             android:id="@+id/btn_submit"
             android:layout_width="wrap_content"
