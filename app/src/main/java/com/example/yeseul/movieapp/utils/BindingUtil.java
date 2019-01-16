@@ -3,21 +3,27 @@ package com.example.yeseul.movieapp.utils;
 import android.databinding.BindingAdapter;
 import android.databinding.BindingConversion;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import okhttp3.Interceptor;
+
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 public class BindingUtil {
 
     @BindingConversion
     public static int setVisibility(boolean isVisible){
 
-        return isVisible ? View.VISIBLE : View.GONE;
+        return isVisible ? View.VISIBLE : GONE;
     }
 
     @BindingAdapter({"rating"})
