@@ -5,4 +5,13 @@
     <string name="search_hint">검색어를 입력하세요.</string>
     <string name="search_submit">검색</string>
     <string name="search_result_empty">에 대한 검색결과가 없습니다.</string>
+
+    //사전 미션
+    <string name="search_filter">조건 검색</string>
+    <string name="genre">장르</string>
+    <string name="country">국가</string>
+    <string name="ok"> 확인 </string>
+    <string name="next"> 다음 </string>
+    <string name="cancel"> 취소 </string>
+
 </resources>

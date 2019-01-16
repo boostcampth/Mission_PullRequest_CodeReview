@@ -8,7 +8,9 @@ import com.example.yeseul.movieapp.data.source.movie.MovieRepository;
 import com.example.yeseul.movieapp.mapper.MovieMapper;
 import com.example.yeseul.movieapp.pojo.Movie;
 import com.example.yeseul.movieapp.view.adapter.AdapterContract;
+import com.example.yeseul.movieapp.view.custom.FilterView;
 
+import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -23,13 +25,25 @@ public class MainPresenter implements MainContract.Presenter {
     private AdapterContract.Model<Movie> adapterModel;
 
     private String searchKey = ""; // 검색 키워드
+    private String genre = "";
+    private String country = "";
     private final int PAGE_UNIT = 20; // 한번에 가져올 데이터 개수
     private int currentPage = 0; // 현재 페이지 index
     private boolean isEndOfPage = false; // 페이지 끝 flag
 
+    private ObservableField<String> filter = new ObservableField<>("필터");
+
     public MainPresenter(MainContract.View view, MovieRepository repository) {
         this.view = view;
         this.repository = repository;
+    }
+
+    public ObservableField<String> getFilter() {
+        return filter;
+    }
+
+    public void setFilter(String genre, String country) {
+        filter.set("장르 : " + genre +"\n"+"국가 : "+country);
     }
 
     @Override
@@ -54,8 +68,10 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void onSearchButtonClicked(String searchKey) {
+    public void onSearchButtonClicked(String searchKey, String genre, String country) {
         this.searchKey = searchKey;
+        this.genre = genre;
+        this.country = country;
         loadItems(true);
     }
 
@@ -76,7 +92,10 @@ public class MainPresenter implements MainContract.Presenter {
 
         isLoading.set(true);
 
-        repository.searchMovies(MovieMapper.toRequest(searchKey, PAGE_UNIT, (PAGE_UNIT * currentPage++) + 1))
+        HashMap<String,String> genreMap = FilterView.getGenreMap();
+        HashMap<String,String> countryMap = FilterView.getCountryMap();
+
+        repository.searchMovies(MovieMapper.toRequest(searchKey, PAGE_UNIT, (PAGE_UNIT * currentPage++) + 1, genreMap.get(genre), countryMap.get(country)))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {
 

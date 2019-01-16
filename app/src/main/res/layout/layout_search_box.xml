@@ -17,7 +17,7 @@
         <EditText
             android:id="@+id/et_search"
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="4"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/padding_main"
             android:layout_marginStart="@dimen/padding_main"
@@ -29,6 +29,17 @@
             android:textColor="@android:color/black"
             android:textSize="@dimen/text_size_main"
             android:gravity="center_vertical"/>
+
+        <Button
+            android:id="@+id/btn_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:background="@null"
+            android:textSize="16sp"
+            android:text="@{presenter.filter}"
+            />
 
         <Button
             android:id="@+id/btn_submit"
