@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="vm_recent_search_word"
+            type="com.example.yeseul.movieapp.RecentSearchWordVM"/>
+
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:orientation="horizontal"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:paddingLeft="16dp"
+        android:id="@+id/itemLL"
+        android:background="@color/white_ffffff">
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/ic_history_clock_button"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            android:paddingLeft="12dp"
+            android:textColor="@color/black_000000"
+            android:text="@{vm_recent_search_word.recentSearchWord.movieName}"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:textSize="16sp"
+            date="@{vm_recent_search_word.recentSearchWord.date}"
+            />
+    </LinearLayout>
+</layout>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:bind="http://schemas.android.com/tools">
 
     <data>
@@ -8,43 +9,57 @@
             type="com.example.yeseul.movieapp.view.main.MainPresenter"/>
     </data>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include
-            android:id="@+id/search_box"
-            layout="@layout/layout_search_box"
-            bind:presenter="@{presenter}"/>
-
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize"
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.example.yeseul.movieapp.view.custom.EmptyRecyclerView
                 android:id="@+id/recycler_movie"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:overScrollMode="never"/>
+                android:overScrollMode="never" />
 
             <TextView
                 android:id="@+id/empty_view"
-                android:padding="@dimen/padding_main"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:gravity="center"
+                android:padding="@dimen/padding_main"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/text_size_main"/>
+                android:textSize="@dimen/text_size_main" />
 
             <ProgressBar
                 android:id="@+id/loading"
-                android:visibility="@{presenter.isLoading}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:visibility="@{presenter.isLoading}" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparent_black"
+                android:visibility="gone"
+                android:orientation="horizontal"
+                android:id="@+id/view_translate"></LinearLayout>
         </FrameLayout>
-    </LinearLayout>
+
+        <include
+            android:id="@+id/search_box"
+            layout="@layout/layout_search_box"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            bind:presenter="@{presenter}" />
+    </FrameLayout>
 </layout>

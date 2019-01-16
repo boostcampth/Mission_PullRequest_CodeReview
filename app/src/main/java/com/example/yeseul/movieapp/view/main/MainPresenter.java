@@ -39,7 +39,6 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void loadItems(boolean isRefresh) {
-
         // refresh true 의 경우 초기화
         if (isRefresh){
             currentPage = 0;
