@@ -2,7 +2,6 @@ package com.example.yeseul.movieapp.view.main;
 
 import android.annotation.SuppressLint;
 import android.databinding.ObservableBoolean;
-import android.databinding.ObservableField;
 
 import com.example.yeseul.movieapp.data.source.movie.MovieRepository;
 import com.example.yeseul.movieapp.mapper.MovieMapper;
@@ -10,6 +9,7 @@ import com.example.yeseul.movieapp.pojo.Movie;
 import com.example.yeseul.movieapp.view.adapter.AdapterContract;
 
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
@@ -26,6 +26,7 @@ public class MainPresenter implements MainContract.Presenter {
     private final int PAGE_UNIT = 20; // 한번에 가져올 데이터 개수
     private int currentPage = 0; // 현재 페이지 index
     private boolean isEndOfPage = false; // 페이지 끝 flag
+    private final String FIRST_OF_PAGE = "1";
 
     public MainPresenter(MainContract.View view, MovieRepository repository) {
         this.view = view;
@@ -49,6 +50,8 @@ public class MainPresenter implements MainContract.Presenter {
 
         // 마지막 페이지가 아니고 로딩중 아닌 경우 getMovieList 호출
         if(!isLoading.get() && !isEndOfPage) {
+            getMovieList();
+        } else if(isRefresh) {
             getMovieList();
         }
     }
@@ -76,7 +79,8 @@ public class MainPresenter implements MainContract.Presenter {
 
         isLoading.set(true);
 
-        repository.searchMovies(MovieMapper.toRequest(searchKey, PAGE_UNIT, (PAGE_UNIT * currentPage++) + 1))
+        Map<String, String> request = MovieMapper.toRequest(searchKey, PAGE_UNIT, (PAGE_UNIT * currentPage++) + 1);
+        repository.searchMovies(request)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {
 
@@ -96,6 +100,14 @@ public class MainPresenter implements MainContract.Presenter {
                     if ((PAGE_UNIT * currentPage) >= response.getTotal() || movieList.size() < PAGE_UNIT) { // 마지막 페이지거나 검색 결과가 10개 미만
                         // 페이지 끝 flag ON
                         isEndOfPage = true;
+                    }
+
+                    // 요청했던 page 가 첫번째 page 일 경우, adapter 의 list 를 clear
+                    String requestedPage = request.get(MovieMapper.QUERY_STRING_START);
+                    if(requestedPage != null && requestedPage.equals(FIRST_OF_PAGE)) {
+                        if(adapterModel.getItemCount() != 0) {
+                            adapterModel.clearItems();
+                        }
                     }
 
                     // 어댑터에 리스트 추가
