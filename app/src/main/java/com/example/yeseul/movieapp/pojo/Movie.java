@@ -40,7 +40,7 @@ public class Movie {
     private String userRating;
 
     @Expose(serialize = false, deserialize = false)
-    public ObservableBoolean noExpand = new ObservableBoolean();
+    private ObservableBoolean noExpand = new ObservableBoolean();
 
     public String getTitle() {
         return title;
@@ -104,5 +104,9 @@ public class Movie {
 
     public void setUserRating(String userRating) {
         this.userRating = userRating;
+    }
+
+    public ObservableBoolean getNoExpand() {
+        return noExpand;
     }
 }

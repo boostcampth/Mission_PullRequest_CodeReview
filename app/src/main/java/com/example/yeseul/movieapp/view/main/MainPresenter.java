@@ -16,7 +16,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 public class MainPresenter implements MainContract.Presenter {
 
     public final ObservableBoolean isLoading = new ObservableBoolean(false); // 로딩 중 flag 바인딩
-    public final ObservableField<String> genreStr = new ObservableField<>("전체"); // 장르 텍스트
+    private final ObservableField<String> genreStr = new ObservableField<>("전체"); // 장르 텍스트
 
     private MainContract.View view;
     private MovieRepository repository;
@@ -124,5 +124,9 @@ public class MainPresenter implements MainContract.Presenter {
                     // 뷰에 알리기
                     view.onSearchResultEmpty(searchKey);
                 });
+    }
+
+    public ObservableField<String> getGenreStr() {
+        return genreStr;
     }
 }

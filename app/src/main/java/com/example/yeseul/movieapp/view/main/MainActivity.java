@@ -1,10 +1,10 @@
 package com.example.yeseul.movieapp.view.main;
 
-import android.app.AlertDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.customtabs.CustomTabsIntent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -86,11 +86,12 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
     private void onGenreButtonClicked() {
         new AlertDialog.Builder(this)
                 .setTitle("장르")
+                .setCancelable(false)
                 .setSingleChoiceItems(R.array.genres, presenter.getGenre(), (dialog, which) -> {
                     String genre = getResources().getStringArray(R.array.genres)[which];
                     presenter.setGenre(genre, which);
+                    dialog.cancel();
                 })
-                .setPositiveButton("확인", null)
                 .create()
                 .show();
     }
