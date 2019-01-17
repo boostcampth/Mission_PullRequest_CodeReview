@@ -184,14 +184,17 @@ public abstract class BaseRecyclerAdapter<T, H extends RecyclerView.ViewHolder> 
     @SuppressWarnings("unchecked")
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
 
-        holder.itemView.setOnClickListener(view -> {
-
-            // item click listener 등록
-            if(onItemClickListener != null) {
+        if (onItemClickListener != null) {
+            holder.itemView.setOnClickListener(view -> {
+                // item click listener 등록
                 onItemClickListener.onItemClick(position);
-            }
+            });
 
-        });
+            holder.itemView.setOnLongClickListener(view -> {
+                onItemClickListener.onItemLongClick(position);
+                return true;
+            });
+        }
 
         onBindView((H) holder, position);
     }

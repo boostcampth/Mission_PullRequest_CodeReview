@@ -5,4 +5,6 @@
     <string name="search_hint">검색어를 입력하세요.</string>
     <string name="search_submit">검색</string>
     <string name="search_result_empty">에 대한 검색결과가 없습니다.</string>
+
+    <string name="share_message">공유하기</string>
 </resources>
