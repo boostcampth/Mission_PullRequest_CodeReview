@@ -1,9 +1,7 @@
 package com.example.yeseul.movieapp.view.main;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -56,11 +54,11 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
         binding.recyclerMovie.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         // 최하단 스크롤 감지
-        binding.recyclerMovie.setOnScrollListener(new RecyclerView.OnScrollListener(){
+        binding.recyclerMovie.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if(!binding.recyclerMovie.canScrollVertically(1)){
+                if (!binding.recyclerMovie.canScrollVertically(1)) {
                     presenter.loadItems(false);
                 }
             }
@@ -68,7 +66,7 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
 
         // 키보드 검색 버튼 리스너 등록
         binding.searchBox.etSearch.setOnEditorActionListener((v, actionId, event) -> {
-            if(actionId == EditorInfo.IME_ACTION_SEARCH){
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 onSearchButtonClicked();
                 return true;
             }
@@ -80,13 +78,14 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
     }
 
     /**
-     * 키보드 검색 혹은 검색 버튼 눌렀을 때 호출 */
-    private void onSearchButtonClicked(){
+     * 키보드 검색 혹은 검색 버튼 눌렀을 때 호출
+     */
+    private void onSearchButtonClicked() {
 
         // 입력값이 존재 하는지 체크
         String searchKey = binding.searchBox.etSearch.getText().toString();
 
-        if(!TextUtils.isEmpty(searchKey)) {
+        if (!TextUtils.isEmpty(searchKey)) {
             presenter.onSearchButtonClicked(searchKey);
             binding.recyclerMovie.scrollToPosition(0);
             binding.emptyView.setText("");
@@ -98,7 +97,8 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
     }
 
     /**
-     * 검색 결과가 없는 경우 presenter 에 의해 호출됨 */
+     * 검색 결과가 없는 경우 presenter 에 의해 호출됨
+     */
     @Override
     public void onSearchResultEmpty(String searchKey) {
 
@@ -108,14 +108,15 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
     }
 
     /**
-     * 영화 상세 정보 URL 로 연결 */
+     * 영화 줄거리 표시
+     */
     @Override
-    public void startMovieDetailPage(String linkUrl) {
-
-        CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
-                .setToolbarColor(getResources().getColor(R.color.colorPrimary))
-                .build();
-
-        customTabsIntent.launchUrl(this, Uri.parse(linkUrl));
+    public void startMovieDetailPage(String movieStory, int position) {
+        if(movieStory != null) {
+            if (movieStory.equals("")) {
+                movieStory = getString(R.string.story_result_empty);
+            }
+        }
+        adapter.updateItem(position, movieStory);
     }
 }

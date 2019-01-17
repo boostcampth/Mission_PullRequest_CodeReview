@@ -2,15 +2,10 @@ package com.example.yeseul.movieapp.utils;
 
 import android.databinding.BindingAdapter;
 import android.databinding.BindingConversion;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
-
-import okhttp3.Interceptor;
 
 public class BindingUtil {
 
@@ -31,8 +26,12 @@ public class BindingUtil {
 
     @BindingAdapter({"boldText"})
     public static void setBoldText(TextView textView, String text){
-
-        textView.setText(Html.fromHtml(text));
+        if(text != null)
+            textView.setText(Html.fromHtml(text));
     }
 
+    @BindingAdapter({"bind:visible"})
+    public static void setVisible(View view, boolean visible) {
+        view.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
 }

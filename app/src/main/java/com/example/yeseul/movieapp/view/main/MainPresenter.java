@@ -2,16 +2,21 @@ package com.example.yeseul.movieapp.view.main;
 
 import android.annotation.SuppressLint;
 import android.databinding.ObservableBoolean;
-import android.databinding.ObservableField;
 
 import com.example.yeseul.movieapp.data.source.movie.MovieRepository;
 import com.example.yeseul.movieapp.mapper.MovieMapper;
 import com.example.yeseul.movieapp.pojo.Movie;
 import com.example.yeseul.movieapp.view.adapter.AdapterContract;
 
+import org.jsoup.Jsoup;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
 import java.util.List;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class MainPresenter implements MainContract.Presenter {
 
@@ -62,8 +67,7 @@ public class MainPresenter implements MainContract.Presenter {
     @Override
     public void setAdapterView(AdapterContract.View adapterView) {
         this.adapterView = adapterView;
-        this.adapterView.setOnItemClickListener(position ->
-                view.startMovieDetailPage(this.adapterModel.getItem(position).getLinkUrl()));
+        this.adapterView.setOnItemClickListener(this::getMovieStory);
     }
 
     @Override
@@ -110,5 +114,36 @@ public class MainPresenter implements MainContract.Presenter {
                     // 뷰에 알리기
                     view.onSearchResultEmpty(searchKey);
                 });
+    }
+
+    @SuppressLint("CheckResult")
+    private void getMovieStory(int position){
+        if(this.adapterModel.getItem(position).getStory() == null) {
+            isLoading.set(true);
+            getJsoupMovieStory(this.adapterModel.getItem(position).getLinkUrl())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            story -> {
+                                isLoading.set(false);
+                                view.startMovieDetailPage(story, position);
+                            });
+        }else{
+            view.startMovieDetailPage(null, position);
+        }
+    }
+
+    private Observable<String> getJsoupMovieStory(String linkUrl) {
+        return Observable.fromCallable(() -> {
+            try {
+                Elements movie_story = Jsoup.connect(linkUrl)
+                        .timeout(3000)
+                        .get().select("p[class=con_tx]");
+
+                return movie_story != null ? movie_story.html() : "";
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 }

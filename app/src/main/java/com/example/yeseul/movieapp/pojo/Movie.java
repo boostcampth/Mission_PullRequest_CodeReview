@@ -37,6 +37,8 @@ public class Movie {
     @Expose
     private String userRating;
 
+    private String story;
+
     public String getTitle() {
         return title;
     }
@@ -99,5 +101,13 @@ public class Movie {
 
     public void setUserRating(String userRating) {
         this.userRating = userRating;
+    }
+
+    public String getStory() {
+        return story;
+    }
+
+    public void setStory(String story) {
+        this.story = story;
     }
 }
