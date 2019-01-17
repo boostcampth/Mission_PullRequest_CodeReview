@@ -11,7 +11,7 @@ public interface MainContract {
 
         void onSearchResultEmpty(String searchKey);
 
-        void startMovieDetailPage(String linkUrl);
+        void startMovieDetailPage(String movieStory, int position);
     }
 
     interface Presenter extends BasePresenter {

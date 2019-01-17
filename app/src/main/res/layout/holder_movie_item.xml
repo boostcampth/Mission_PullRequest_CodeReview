@@ -3,79 +3,136 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="item"
-            type="com.example.yeseul.movieapp.pojo.Movie"/>
+            type="com.example.yeseul.movieapp.pojo.Movie" />
     </data>
 
     <LinearLayout
-        android:padding="@dimen/padding_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="75dp"
-            android:layout_height="100dp"
-            imageCenterCrop="@{item.imageUrl}"/>
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_marginLeft="@dimen/padding_main"
-            android:layout_marginStart="@dimen/padding_main"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/padding_main">
 
-            <TextView
-                android:layout_width="match_parent"
+            <ImageView
+                imageCenterCrop="@{item.imageUrl}"
+                android:layout_width="75dp"
+                android:layout_height="100dp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_main"
-                android:textColor="@android:color/black"
-                android:maxLines="2"
-                android:ellipsize="end"
-                android:lineSpacingExtra="@dimen/padding_ultra_small"
-                boldText="@{item.title}"/>
+                android:layout_marginStart="@dimen/padding_main"
+                android:layout_marginLeft="@dimen/padding_main"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-            <RatingBar
-                style="@style/ratingBar"
-                android:layout_marginTop="@dimen/padding_ultra_small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:rating="@{item.userRating}"
-                android:stepSize="0.5"
-                android:numStars="5"/>
+                <TextView
+                    boldText="@{item.title}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lineSpacingExtra="@dimen/padding_ultra_small"
+                    android:maxLines="2"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_main" />
 
-            <TextView
-                android:layout_marginTop="@dimen/padding_ultra_small"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_small"
-                android:textColor="@android:color/black"
-                android:text="@{item.pubDate}"/>
+                <RatingBar
+                    style="@style/ratingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_ultra_small"
+                    android:numStars="5"
+                    android:stepSize="0.5"
+                    app:rating="@{item.userRating}" />
 
-            <TextView
-                android:layout_marginTop="@dimen/padding_ultra_small"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:ellipsize="end"
-                android:textSize="@dimen/text_size_small"
-                android:textColor="@android:color/black"
-                boldText="@{item.director}"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_ultra_small"
+                    android:text="@{item.pubDate}"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_small" />
 
-            <TextView
-                android:layout_marginTop="@dimen/padding_ultra_small"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="2"
-                android:ellipsize="end"
-                android:lineSpacingExtra="@dimen/padding_ultra_small"
-                android:textSize="@dimen/text_size_small"
-                android:textColor="@android:color/black"
-                boldText="@{item.actor}"/>
+                <TextView
+                    boldText="@{item.director}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_ultra_small"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_small" />
 
+                <TextView
+                    boldText="@{item.actor}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_ultra_small"
+                    android:ellipsize="end"
+                    android:lineSpacingExtra="@dimen/padding_ultra_small"
+                    android:maxLines="2"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_small" />
+
+            </LinearLayout>
         </LinearLayout>
+
+        <android.support.constraint.ConstraintLayout
+            app:visible="@{item.story != null}"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_main"
+            android:layout_marginLeft="@dimen/padding_main">
+
+            <Button
+                android:id="@+id/btn_link"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:text="@string/link_submit"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_size_main"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/story_text"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size_main"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_link"
+                app:layout_constraintTop_toTopOf="@+id/btn_link" />
+
+
+            <TextView
+                boldText="@{item.story}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_ultra_small"
+                android:ellipsize="end"
+                android:lineSpacingExtra="@dimen/padding_ultra_small"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size_small"
+                android:layout_marginRight="@dimen/padding_main"
+                android:layout_marginEnd="@dimen/padding_main"
+                android:layout_marginBottom="@dimen/padding_main"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_link"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+        </android.support.constraint.ConstraintLayout>
     </LinearLayout>
 </layout>
