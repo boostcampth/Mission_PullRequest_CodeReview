@@ -23,7 +23,7 @@ public class MainPresenter implements MainContract.Presenter {
     private AdapterContract.Model<Movie> adapterModel;
 
     private String searchKey = ""; // 검색 키워드
-    private final int PAGE_UNIT = 20; // 한번에 가져올 데이터 개수
+    private final int PAGE_UNIT = 10; // 한번에 가져올 데이터 개수
     private int currentPage = 0; // 현재 페이지 index
     private boolean isEndOfPage = false; // 페이지 끝 flag
 
@@ -41,10 +41,9 @@ public class MainPresenter implements MainContract.Presenter {
     public void loadItems(boolean isRefresh) {
 
         // refresh true 의 경우 초기화
-        if (isRefresh){
+        if (isRefresh) {
             currentPage = 0;
             isEndOfPage = false;
-            adapterModel.clearItems();
         }
 
         // 마지막 페이지가 아니고 로딩중 아닌 경우 getMovieList 호출
@@ -82,6 +81,11 @@ public class MainPresenter implements MainContract.Presenter {
 
                     // 로딩 flag OFF
                     isLoading.set(false);
+
+                    // 검색버튼에 의한 호출일 경우, 기존 list 비우기
+                    if(currentPage == 1) {
+                        adapterModel.clearItems();
+                    }
 
                     List<Movie> movieList = response.getMovieList();
 
