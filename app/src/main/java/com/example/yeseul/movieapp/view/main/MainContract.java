@@ -7,6 +7,7 @@ import com.example.yeseul.movieapp.view.adapter.AdapterContract;
 
 public interface MainContract {
 
+
     interface View extends BaseView {
 
         void onSearchResultEmpty(String searchKey);
@@ -14,9 +15,11 @@ public interface MainContract {
         void startMovieDetailPage(String linkUrl);
     }
 
+
     interface Presenter extends BasePresenter {
 
-        void onSearchButtonClicked(String searchKey);
+        // 파라미터 추가
+        void onSearchButtonClicked(String searchKey, int searchIndex);
 
         void setAdapterView(AdapterContract.View adapterView);
 
