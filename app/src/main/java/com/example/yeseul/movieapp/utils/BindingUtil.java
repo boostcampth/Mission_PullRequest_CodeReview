@@ -22,16 +22,11 @@ public class BindingUtil {
 
     @BindingAdapter({"rating"})
     public static void setRating(RatingBar ratingBar, String userRating){
-
-        // 소수점 버리기
-        int rating = (int) Float.parseFloat(userRating);
-
-        ratingBar.setRating((float) rating / 2);
+        ratingBar.setRating(Math.round(Float.parseFloat(userRating))/(float)2);
     }
 
     @BindingAdapter({"boldText"})
     public static void setBoldText(TextView textView, String text){
-
         textView.setText(Html.fromHtml(text));
     }
 
