@@ -122,8 +122,6 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
                         }else {
                             searchIndex = i+1;
                         }
-                        Toast.makeText(getApplicationContext(), i+"번째",Toast.LENGTH_LONG).show();
-                        Log.v("227 index check",String.valueOf(searchIndex));
                         binding.searchBox.btnGenre.setText(getResources().getStringArray(R.array.movie_genre)[i]);
                     }
                 });
