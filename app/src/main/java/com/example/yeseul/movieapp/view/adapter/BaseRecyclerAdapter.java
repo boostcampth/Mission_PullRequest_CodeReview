@@ -2,18 +2,21 @@ package com.example.yeseul.movieapp.view.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
+
+import com.example.yeseul.movieapp.utils.POJODiffUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseRecyclerAdapter<T, H extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements AdapterContract.View, AdapterContract.Model<T>{
+public abstract class BaseRecyclerAdapter<T, H extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements AdapterContract.View, AdapterContract.Model<T> {
 
     protected List<T> itemList;
     protected OnItemClickListener onItemClickListener;
     protected Context context;
 
-    public BaseRecyclerAdapter(Context context){
+    public BaseRecyclerAdapter(Context context) {
         this.context = context;
     }
 
@@ -22,7 +25,7 @@ public abstract class BaseRecyclerAdapter<T, H extends RecyclerView.ViewHolder> 
         this.itemList = itemList;
     }
 
-    public Context getContext(){
+    public Context getContext() {
         return context;
     }
 
@@ -38,19 +41,29 @@ public abstract class BaseRecyclerAdapter<T, H extends RecyclerView.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        if(this.itemList == null) {
+        if (this.itemList == null) {
             return 0;
         }
 
         return this.itemList.size();
     }
 
+    private void diffUtilUpdate(List<T> oldList, List<T> newList) {
+        POJODiffUtil<T> diffUTilCallback = new POJODiffUtil<>(oldList, newList);
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffUTilCallback);
+
+        this.itemList.clear();
+        this.itemList.addAll(newList);
+
+        diffResult.dispatchUpdatesTo(this);
+    }
+
     /**
      * 해당 position 의 item 반환
-     * */
+     */
     @Override
-    public T getItem(int position){
-        if(this.itemList == null){
+    public T getItem(int position) {
+        if (this.itemList == null) {
             return null;
         }
 
@@ -59,10 +72,10 @@ public abstract class BaseRecyclerAdapter<T, H extends RecyclerView.ViewHolder> 
 
     /**
      * 전체 item list 반환
-     * */
+     */
     @Override
-    public List<T> getItemList(){
-        if(this.itemList == null){
+    public List<T> getItemList() {
+        if (this.itemList == null) {
             return null;
         }
 
@@ -71,98 +84,99 @@ public abstract class BaseRecyclerAdapter<T, H extends RecyclerView.ViewHolder> 
 
     /**
      * item list 전체 수정
-     * */
-    public void updateItems(List<T> items){
-        if(this.itemList == null){
-            itemList = new ArrayList<>();
-        }
-        this.itemList.clear();
-        this.itemList.addAll(items);
-
-        notifyDataSetChanged();
+     */
+    public void updateItems(List<T> items) {
+        diffUtilUpdate(this.itemList, items);
     }
 
     /**
      * 해당 position 의 item 수정
-     * */
-    public void updateItem(int position, T item){
-        if(this.itemList == null){
+     */
+    public void updateItem(int position, T item) {
+        if (this.itemList == null) {
             return;
         }
-        if(position > this.itemList.size()){
+        if (position > this.itemList.size()) {
             return;
         }
-        this.itemList.remove(position);
-        this.itemList.add(position, item);
+        List<T> newItemsList = new ArrayList<>(itemList);
+        newItemsList.remove(position);
+        newItemsList.add(position, item);
 
-        notifyItemChanged(position);
+        diffUtilUpdate(this.itemList, newItemsList);
     }
+
     /**
      * 맨 처음 item list 초기화 또는 ,
      * item list 마지막 position 뒤에 추가
-     * */
+     */
     @Override
-    public void addItems(List<T> items){
+    public void addItems(List<T> items) {
         if (this.itemList == null) {
             this.itemList = items;
             notifyDataSetChanged();
         } else {
-            int position = this.itemList.size();
-            this.itemList.addAll(items);
-            notifyItemRangeInserted(position, items.size());
+            List<T> newItemList = new ArrayList<>(this.itemList);
+            newItemList.addAll(items);
+            diffUtilUpdate(this.itemList, newItemList);
         }
     }
 
     /**
      * position 위치에 items 추가
-     * */
-    public void addItems(int position, List<T> items){
-        if(this.itemList == null){
+     */
+    public void addItems(int position, List<T> items) {
+        if (this.itemList == null) {
             this.itemList = new ArrayList<>();
         }
-        if(position > this.itemList.size()){
+        if (position > this.itemList.size()) {
             return;
         }
-        this.itemList.addAll(position, items);
+        List<T> newItemList = new ArrayList<>(this.itemList);
+        newItemList.addAll(position, items);
 
-        notifyItemRangeInserted(position, items.size());
+        diffUtilUpdate(this.itemList, newItemList);
     }
 
     /**
      * item list 마지막 position 뒤에 item 추가
-     * */
+     */
     @Override
-    public void addItem(T item){
+    public void addItem(T item) {
         if (this.itemList == null) {
             this.itemList = new ArrayList<>();
             itemList.add(item);
             notifyDataSetChanged();
         } else {
-            int position = this.itemList.size();
-            this.itemList.add(item);
-            notifyItemInserted(position);
+            List<T> newItemList = new ArrayList<>(this.itemList);
+            newItemList.add(item);
+
+            diffUtilUpdate(this.itemList, newItemList);
         }
     }
 
     /**
      * position 위치에 item 추가
-     * */
-    public void addItem(int position, T item){
-        if(this.itemList == null){
+     */
+    public void addItem(int position, T item) {
+        if (this.itemList == null) {
             return;
         }
-        if(position > this.itemList.size()){
+        if (position > this.itemList.size()) {
             return;
         }
-        this.itemList.add(position, item);
-        notifyItemInserted(position);
+        List<T> newItemList = new ArrayList<>(this.itemList);
+        newItemList.add(position, item);
+
+        diffUtilUpdate(this.itemList, newItemList);
     }
+
     /**
      * item list 전체 삭제
-     * */
+     */
     @Override
-    public void clearItems(){
-        if(itemList != null){
+    public void clearItems() {
+        if (itemList != null) {
             itemList.clear();
             notifyDataSetChanged();
         }
@@ -170,13 +184,14 @@ public abstract class BaseRecyclerAdapter<T, H extends RecyclerView.ViewHolder> 
 
     /**
      * position 위치의 item 삭제
-     * */
+     */
     @Override
     public void removeItem(int position) {
         if (this.itemList != null && position < this.itemList.size()) {
-            this.itemList.remove(position);
-            notifyItemRemoved(position);
-            notifyItemRangeChanged(position, this.itemList.size());
+            List<T> newItemList = new ArrayList<>(this.itemList);
+            newItemList.remove(position);
+
+            diffUtilUpdate(this.itemList, newItemList);
         }
     }
 
@@ -187,7 +202,7 @@ public abstract class BaseRecyclerAdapter<T, H extends RecyclerView.ViewHolder> 
         holder.itemView.setOnClickListener(view -> {
 
             // item click listener 등록
-            if(onItemClickListener != null) {
+            if (onItemClickListener != null) {
                 onItemClickListener.onItemClick(position);
             }
 
@@ -198,3 +213,4 @@ public abstract class BaseRecyclerAdapter<T, H extends RecyclerView.ViewHolder> 
 
     protected abstract void onBindView(H holder, int position);
 }
+

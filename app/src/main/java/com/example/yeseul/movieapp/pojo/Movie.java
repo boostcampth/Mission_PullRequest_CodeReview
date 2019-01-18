@@ -100,4 +100,12 @@ public class Movie {
     public void setUserRating(String userRating) {
         this.userRating = userRating;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Movie) {
+            return this.getTitle().equals(((Movie) obj).getTitle());
+        }
+        return false;
+    }
 }
