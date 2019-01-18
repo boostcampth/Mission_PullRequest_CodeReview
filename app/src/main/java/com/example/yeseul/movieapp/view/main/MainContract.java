@@ -15,6 +15,7 @@ public interface MainContract {
     }
 
     interface Presenter extends BasePresenter {
+        void onYearButtonClicked(int from,int to);
 
         void onSearchButtonClicked(String searchKey);
 

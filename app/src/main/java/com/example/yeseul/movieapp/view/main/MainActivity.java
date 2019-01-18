@@ -1,5 +1,6 @@
 package com.example.yeseul.movieapp.view.main;
 
+import android.app.AlertDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.inputmethod.EditorInfo;
+import android.widget.NumberPicker;
 
 import com.example.yeseul.movieapp.R;
 import com.example.yeseul.movieapp.data.source.movie.MovieRepository;
@@ -17,7 +19,7 @@ import com.example.yeseul.movieapp.databinding.ActivityMovieBinding;
 import com.example.yeseul.movieapp.utils.KeyboardUtil;
 import com.example.yeseul.movieapp.view.BaseActivity;
 
-public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresenter> implements MainContract.View {
+public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresenter> implements MainContract.View{
 
     private MovieListAdapter adapter;
 
@@ -77,6 +79,16 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
 
         // 검색 버튼 리스너 등록
         binding.searchBox.btnSubmit.setOnClickListener(v -> onSearchButtonClicked());
+
+        //년도 버튼 리스너 등록
+        binding.searchBox.yearBtn.setOnClickListener(v->onYearButtonClicked());
+    }
+
+    // 년도 버튼 눌렀을 때 호출
+    private void onYearButtonClicked(){
+        NumberPickerDialog dialog=new NumberPickerDialog();
+        dialog.setListener(presenter);
+        dialog.show(getSupportFragmentManager(),"Year Select");
     }
 
     /**
