@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="presenter"
+            type="com.example.yeseul.movieapp.view.main.MainPresenter"/>
+    </data>
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/year_layout"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/line_bottom"
+        android:visibility="@{presenter.isActiveYear}">
+
+        <TextView
+            android:id="@+id/year_from"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/year_text_size"
+            android:text="@string/search_yearFrom"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintEnd_toStartOf="@id/year_from_to"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/year_from_to"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/year_text_size"
+            android:text="~"
+            android:textColor="@color/colorPrimary"
+            android:paddingHorizontal="25dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        <TextView
+            android:id="@+id/year_to"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/year_text_size"
+            android:textColor="@color/colorPrimary"
+            android:text="@string/search_yearTo"
+            app:layout_constraintStart_toEndOf="@id/year_from_to"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

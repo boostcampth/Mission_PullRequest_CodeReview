@@ -3,9 +3,10 @@
     xmlns:bind="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="presenter"
-            type="com.example.yeseul.movieapp.view.main.MainPresenter"/>
+            type="com.example.yeseul.movieapp.view.main.MainPresenter" />
     </data>
 
     <LinearLayout
@@ -16,6 +17,11 @@
         <include
             android:id="@+id/search_box"
             layout="@layout/layout_search_box"
+            bind:presenter="@{presenter}" />
+
+        <include
+            android:id="@+id/calender_box"
+            layout="@layout/layout_year_box"
             bind:presenter="@{presenter}"/>
 
         <FrameLayout
@@ -27,23 +33,23 @@
                 android:id="@+id/recycler_movie"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:overScrollMode="never"/>
+                android:overScrollMode="never" />
 
             <TextView
                 android:id="@+id/empty_view"
-                android:padding="@dimen/padding_main"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:padding="@dimen/padding_main"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/text_size_main"/>
+                android:textSize="@dimen/text_size_main" />
 
             <ProgressBar
                 android:id="@+id/loading"
-                android:visibility="@{presenter.isLoading}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:visibility="@{presenter.isLoading}" />
 
         </FrameLayout>
     </LinearLayout>

@@ -11,4 +11,6 @@
 
     <!-- search box -->
 
+    <!-- year box -->
+    <dimen name="year_text_size">16sp</dimen>
 </resources>
