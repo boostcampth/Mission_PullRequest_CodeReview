@@ -12,6 +12,10 @@ public interface MainContract {
         void onSearchResultEmpty(String searchKey);
 
         void startMovieDetailPage(String linkUrl);
+
+        void updateYearFrom(int yearFrom);
+
+        void updateYearTo(int yearTo);
     }
 
     interface Presenter extends BasePresenter {
@@ -21,5 +25,9 @@ public interface MainContract {
         void setAdapterView(AdapterContract.View adapterView);
 
         void setAdapterModel(AdapterContract.Model<Movie> adapterModel);
+
+        void onYearFromSelected(int yearFrom);
+
+        void onYearToSelected(int yearTo);
     }
 }

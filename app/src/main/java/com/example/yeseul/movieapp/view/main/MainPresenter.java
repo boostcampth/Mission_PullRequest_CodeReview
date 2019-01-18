@@ -1,21 +1,26 @@
 package com.example.yeseul.movieapp.view.main;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.databinding.ObservableBoolean;
-import android.databinding.ObservableField;
+import android.os.Build;
 
 import com.example.yeseul.movieapp.data.source.movie.MovieRepository;
 import com.example.yeseul.movieapp.mapper.MovieMapper;
 import com.example.yeseul.movieapp.pojo.Movie;
 import com.example.yeseul.movieapp.view.adapter.AdapterContract;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
+
+@TargetApi(Build.VERSION_CODES.O)
 public class MainPresenter implements MainContract.Presenter {
 
     public final ObservableBoolean isLoading = new ObservableBoolean(false); // 로딩 중 flag 바인딩
+    public final ObservableBoolean isActiveYear = new ObservableBoolean(false);
 
     private MainContract.View view;
     private MovieRepository repository;
@@ -26,6 +31,8 @@ public class MainPresenter implements MainContract.Presenter {
     private final int PAGE_UNIT = 20; // 한번에 가져올 데이터 개수
     private int currentPage = 0; // 현재 페이지 index
     private boolean isEndOfPage = false; // 페이지 끝 flag
+    private int yearFrom = 1896;
+    private int yearTo = LocalDate.now().getYear();
 
     public MainPresenter(MainContract.View view, MovieRepository repository) {
         this.view = view;
@@ -41,14 +48,14 @@ public class MainPresenter implements MainContract.Presenter {
     public void loadItems(boolean isRefresh) {
 
         // refresh true 의 경우 초기화
-        if (isRefresh){
+        if (isRefresh) {
             currentPage = 0;
             isEndOfPage = false;
             adapterModel.clearItems();
         }
 
         // 마지막 페이지가 아니고 로딩중 아닌 경우 getMovieList 호출
-        if(!isLoading.get() && !isEndOfPage) {
+        if (!isLoading.get() && !isEndOfPage) {
             getMovieList();
         }
     }
@@ -57,6 +64,18 @@ public class MainPresenter implements MainContract.Presenter {
     public void onSearchButtonClicked(String searchKey) {
         this.searchKey = searchKey;
         loadItems(true);
+    }
+
+    @Override
+    public void onYearFromSelected(int yearFrom) {
+        this.yearFrom = yearFrom;
+        view.updateYearFrom(yearFrom);
+    }
+
+    @Override
+    public void onYearToSelected(int yearTo) {
+        this.yearTo = yearTo;
+        view.updateYearTo(yearTo);
     }
 
     @Override
@@ -71,12 +90,20 @@ public class MainPresenter implements MainContract.Presenter {
         this.adapterModel = adapterModel;
     }
 
+    public int getYearFrom() {
+        return yearFrom;
+    }
+
+    public int getYearTo() {
+        return yearTo;
+    }
+
     @SuppressLint("CheckResult")
-    private void getMovieList(){
+    private void getMovieList() {
 
         isLoading.set(true);
 
-        repository.searchMovies(MovieMapper.toRequest(searchKey, PAGE_UNIT, (PAGE_UNIT * currentPage++) + 1))
+        repository.searchMovies(MovieMapper.toRequest(searchKey, PAGE_UNIT, (PAGE_UNIT * currentPage++) + 1, yearFrom, yearTo, isActiveYear.get()))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {
 
@@ -85,7 +112,7 @@ public class MainPresenter implements MainContract.Presenter {
 
                     List<Movie> movieList = response.getMovieList();
 
-                    if(movieList.size() == 0){ // 검색 결과가 없는 경우
+                    if (movieList.size() == 0) { // 검색 결과가 없는 경우
                         // 페이지 끝 flag ON
                         isEndOfPage = true;
                         // 뷰에 알리기
