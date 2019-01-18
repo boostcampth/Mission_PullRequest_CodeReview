@@ -20,6 +20,8 @@ import com.example.yeseul.movieapp.view.BaseActivity;
 public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresenter> implements MainContract.View {
 
     private MovieListAdapter adapter;
+    private LinearLayoutManager mLinearLayoutManager;
+    private final int UNVISIBLE = 5;
 
     @Override
     protected int getLayoutId() {
@@ -48,8 +50,9 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
 
     private void initView() {
 
+        mLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         // recyclerView 생성
-        binding.recyclerMovie.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        binding.recyclerMovie.setLayoutManager(mLinearLayoutManager);
         binding.recyclerMovie.setAdapter(adapter);
         binding.recyclerMovie.setEmptyView(binding.emptyView);
         binding.recyclerMovie.setNestedScrollingEnabled(false);
@@ -60,7 +63,11 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if(!binding.recyclerMovie.canScrollVertically(1)){
+
+                int lastVisibleItemPos = mLinearLayoutManager.findLastVisibleItemPosition();
+                int itemCount = adapter.getItemCount();
+
+                if((itemCount > 0) && (UNVISIBLE + lastVisibleItemPos) > itemCount ){
                     presenter.loadItems(false);
                 }
             }
