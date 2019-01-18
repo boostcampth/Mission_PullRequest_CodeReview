@@ -18,6 +18,8 @@ public interface MainContract {
 
         void onSearchButtonClicked(String searchKey);
 
+        void onScrapListButtonClicked();
+
         void setAdapterView(AdapterContract.View adapterView);
 
         void setAdapterModel(AdapterContract.Model<Movie> adapterModel);

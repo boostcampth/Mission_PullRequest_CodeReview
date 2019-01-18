@@ -45,6 +45,13 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"/>
 
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/button_scraplist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:src="@drawable/star_list"
+                android:layout_margin="16dp" />
         </FrameLayout>
     </LinearLayout>
 </layout>

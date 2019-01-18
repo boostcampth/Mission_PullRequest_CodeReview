@@ -77,6 +77,9 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
 
         // 검색 버튼 리스너 등록
         binding.searchBox.btnSubmit.setOnClickListener(v -> onSearchButtonClicked());
+
+        //플로팅 버튼 리스너
+        binding.buttonScraplist.setOnClickListener(v -> onScrapListButtonClicked());
     }
 
     /**
@@ -95,6 +98,13 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
         } else {
             makeToast(getString(R.string.search_hint));
         }
+    }
+
+    /**
+     *  스크랩 리스트 목록 버튼을 눌렀을 때
+     */
+    public void onScrapListButtonClicked() {
+        //인텐트 이동시켜 뷰 뿌려주기
     }
 
     /**

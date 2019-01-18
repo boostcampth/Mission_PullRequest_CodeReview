@@ -37,6 +37,8 @@ public class Movie {
     @Expose
     private String userRating;
 
+    private boolean isScrap = false;
+
     public String getTitle() {
         return title;
     }
@@ -100,4 +102,8 @@ public class Movie {
     public void setUserRating(String userRating) {
         this.userRating = userRating;
     }
+
+    public boolean getIsScrap() { return isScrap; }
+
+    public void setIsScrap() { this.isScrap = isScrap; }
 }

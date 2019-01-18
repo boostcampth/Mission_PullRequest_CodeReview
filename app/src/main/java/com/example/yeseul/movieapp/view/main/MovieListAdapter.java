@@ -22,6 +22,11 @@ public class MovieListAdapter extends BaseRecyclerAdapter<Movie, MovieListAdapte
     @Override
     protected void onBindView(ViewHolder holder, int position) {
         holder.binding.setItem(itemList.get(position));
+
+        //스크랩 버튼 이벤트 동작
+        holder.binding.buttonScrap.setOnClickListener(v -> {
+
+        });
     }
 
     @NonNull
