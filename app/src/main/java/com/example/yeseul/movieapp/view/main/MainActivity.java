@@ -94,6 +94,7 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
     private void onSearchButtonClicked(){
         if(!NetworkUtil.isNetworkAvailable(this)){
             makeToast(getString(R.string.network_error));
+            KeyboardUtil.closeKeyboard(this, binding.searchBox.etSearch);
             return;
         }
         // 입력값이 존재 하는지 체크
@@ -105,7 +106,6 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
             binding.recyclerMovie.scrollToPosition(0);
             binding.emptyView.setText("");
             KeyboardUtil.closeKeyboard(this, binding.searchBox.etSearch);
-
         } else {
             makeToast(getString(R.string.search_hint));
         }
