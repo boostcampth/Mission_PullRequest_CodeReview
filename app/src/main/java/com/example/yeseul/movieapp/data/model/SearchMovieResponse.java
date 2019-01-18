@@ -7,7 +7,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class SearchMovieResponse {
-
     @SerializedName("total")
     @Expose
     private Integer total;
