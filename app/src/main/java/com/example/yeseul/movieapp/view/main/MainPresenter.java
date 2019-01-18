@@ -23,6 +23,7 @@ public class MainPresenter implements MainContract.Presenter {
     private AdapterContract.Model<Movie> adapterModel;
 
     private String searchKey = ""; // 검색 키워드
+    private int searchIndex = 0; // 검색 장르 인덱스
     private final int PAGE_UNIT = 20; // 한번에 가져올 데이터 개수
     private int currentPage = 0; // 현재 페이지 index
     private boolean isEndOfPage = false; // 페이지 끝 flag
@@ -54,8 +55,9 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void onSearchButtonClicked(String searchKey) {
+    public void onSearchButtonClicked(String searchKey, int searchIndex) {
         this.searchKey = searchKey;
+        this.searchIndex = searchIndex;
         loadItems(true);
     }
 
@@ -76,7 +78,8 @@ public class MainPresenter implements MainContract.Presenter {
 
         isLoading.set(true);
 
-        repository.searchMovies(MovieMapper.toRequest(searchKey, PAGE_UNIT, (PAGE_UNIT * currentPage++) + 1))
+        // toRequest에 파라미터 추가
+        repository.searchMovies(MovieMapper.toRequest(searchKey, PAGE_UNIT, (PAGE_UNIT * currentPage++) + 1,searchIndex))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {
 
