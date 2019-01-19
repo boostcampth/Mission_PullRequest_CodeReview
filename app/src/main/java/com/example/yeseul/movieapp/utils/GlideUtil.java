@@ -3,6 +3,8 @@ package com.example.yeseul.movieapp.utils;
 import android.databinding.BindingAdapter;
 import android.widget.ImageView;
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.yeseul.movieapp.R;
 
 public class GlideUtil {
@@ -20,7 +22,12 @@ public class GlideUtil {
 
         if (url == null) return;
 
-        GlideApp.with(imageView).load(url).placeholder(R.drawable.img_boostcamp).centerCrop().into(imageView);
+        GlideApp.with(imageView).load(url)
+                .placeholder(R.drawable.img_boostcamp)
+                .centerCrop()
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                .into(imageView);
     }
 
 }
