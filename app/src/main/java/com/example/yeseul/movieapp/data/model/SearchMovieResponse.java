@@ -20,6 +20,10 @@ public class SearchMovieResponse {
     @Expose
     private Integer display;
 
+    @SerializedName("genre")
+    @Expose
+    private Integer genre;
+
     @SerializedName("items")
     @Expose
     private List<Movie> movieList = null;
@@ -46,6 +50,14 @@ public class SearchMovieResponse {
 
     public void setDisplay(Integer display) {
         this.display = display;
+    }
+
+    public Integer getGenre() {
+        return genre;
+    }
+
+    public void setGenre(Integer genre) {
+        this.genre = genre;
     }
 
     public List<Movie> getMovieList() {
