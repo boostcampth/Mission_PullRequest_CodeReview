@@ -76,15 +76,6 @@
                 android:textColor="@android:color/black"
                 boldText="@{item.actor}"/>
 
-            <ImageButton
-                android:id="@+id/button_scrap"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding_ultra_small"
-                scrap="@{item.isScrap}"
-                android:background="@android:color/transparent"
-                android:layout_gravity="right"/>
-
         </LinearLayout>
     </LinearLayout>
 </layout>

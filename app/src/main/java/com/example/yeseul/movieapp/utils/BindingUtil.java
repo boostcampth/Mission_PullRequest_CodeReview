@@ -35,4 +35,9 @@ public class BindingUtil {
         textView.setText(Html.fromHtml(text));
     }
 
+    @BindingAdapter({"myrating"})
+    public static void setMyRating(RatingBar ratingBar, float myRating){
+
+        ratingBar.setRating(myRating);
+    }
 }

@@ -24,13 +24,4 @@ public class GlideUtil {
         GlideApp.with(imageView).load(url).placeholder(R.drawable.img_boostcamp).centerCrop().into(imageView);
     }
 
-    @BindingAdapter({"scrap"})
-    public static void setScrap(ImageButton imageButton, boolean isScrap) {
-
-        if (isScrap) {
-            GlideApp.with(imageButton).load(R.drawable.star_full).into(imageButton);
-        } else {
-            GlideApp.with(imageButton).load(R.drawable.star_empty).into(imageButton);
-        }
-    }
 }
