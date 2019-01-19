@@ -118,4 +118,12 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
 
         customTabsIntent.launchUrl(this, Uri.parse(linkUrl));
     }
+
+    /**
+     * 같은 검색어로 검색을 재요청한 경우 presenter 에 의해 호출됨*/
+    @Override
+    public void onSameSearchKeyRequest() {
+        makeToast(getString(R.string.same_searchkey_request));
+    }
+
 }

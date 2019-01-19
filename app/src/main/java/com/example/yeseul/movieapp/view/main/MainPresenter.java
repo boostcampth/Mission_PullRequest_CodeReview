@@ -55,6 +55,13 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void onSearchButtonClicked(String searchKey) {
+
+        // 이전에 검색한 Key와 다시 요청한 Key값이 경우
+        if(this.searchKey.equals(searchKey)){
+            view.onSameSearchKeyRequest();
+            return;
+        }
+
         this.searchKey = searchKey;
         loadItems(true);
     }
