@@ -2,7 +2,6 @@ package com.example.yeseul.movieapp.view.main;
 
 import android.annotation.SuppressLint;
 import android.databinding.ObservableBoolean;
-import android.databinding.ObservableField;
 
 import com.example.yeseul.movieapp.data.source.movie.MovieRepository;
 import com.example.yeseul.movieapp.mapper.MovieMapper;
@@ -26,7 +25,7 @@ public class MainPresenter implements MainContract.Presenter {
     private final int PAGE_UNIT = 20; // 한번에 가져올 데이터 개수
     private int currentPage = 0; // 현재 페이지 index
     private boolean isEndOfPage = false; // 페이지 끝 flag
-
+    private int genre;
     public MainPresenter(MainContract.View view, MovieRepository repository) {
         this.view = view;
         this.repository = repository;
@@ -54,8 +53,9 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void onSearchButtonClicked(String searchKey) {
+    public void onSearchButtonClicked(String searchKey,int genre) {
         this.searchKey = searchKey;
+        this.genre=genre;
         loadItems(true);
     }
 
@@ -76,7 +76,7 @@ public class MainPresenter implements MainContract.Presenter {
 
         isLoading.set(true);
 
-        repository.searchMovies(MovieMapper.toRequest(searchKey, PAGE_UNIT, (PAGE_UNIT * currentPage++) + 1))
+        repository.searchMovies(MovieMapper.toRequest(searchKey, PAGE_UNIT, (PAGE_UNIT * currentPage++) + 1,genre))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {
 

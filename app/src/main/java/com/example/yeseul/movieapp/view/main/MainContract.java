@@ -16,7 +16,7 @@ public interface MainContract {
 
     interface Presenter extends BasePresenter {
 
-        void onSearchButtonClicked(String searchKey);
+        void onSearchButtonClicked(String searchKey,int genre);
 
         void setAdapterView(AdapterContract.View adapterView);
 

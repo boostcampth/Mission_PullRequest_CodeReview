@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="genre">
+
+        <item>전체장르</item>
+        <item>드라마</item>
+        <item>판타지</item>
+        <item>서부</item>
+        <item>공포</item>
+        <item>로맨스</item>
+        <item>모험</item>
+        <item>스릴러</item>
+        <item>느와르</item>
+        <item>컬트</item>
+        <item>다큐멘터리</item>
+        <item>코미디</item>
+        <item>가족</item>
+        <item>미스터리</item>
+        <item>전쟁</item>
+        <item>애니메이션</item>
+        <item>범죄</item>
+        <item>뮤지컬</item>
+        <item>SF</item>
+        <item>액션</item>
+        <item>무협</item>
+        <item>에로</item>
+        <item>서스펜스</item>
+        <item>서사</item>
+        <item>블랙코미디</item>
+        <item>실험</item>
+        <item>영화카툰</item>
+        <item>영화음악</item>
+        <item>영화패러디포스터</item>
+
+    </string-array>
+</resources>

@@ -1,5 +1,7 @@
 package com.example.yeseul.movieapp.view.main;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,12 +17,13 @@ import com.example.yeseul.movieapp.R;
 import com.example.yeseul.movieapp.data.source.movie.MovieRepository;
 import com.example.yeseul.movieapp.databinding.ActivityMovieBinding;
 import com.example.yeseul.movieapp.utils.KeyboardUtil;
+import com.example.yeseul.movieapp.utils.NetworkUtil;
 import com.example.yeseul.movieapp.view.BaseActivity;
 
 public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresenter> implements MainContract.View {
 
     private MovieListAdapter adapter;
-
+    private int genreIndex =0;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_movie;
@@ -56,7 +59,7 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
         binding.recyclerMovie.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         // 최하단 스크롤 감지
-        binding.recyclerMovie.setOnScrollListener(new RecyclerView.OnScrollListener(){
+        binding.recyclerMovie.addOnScrollListener(new RecyclerView.OnScrollListener(){
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -77,6 +80,7 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
 
         // 검색 버튼 리스너 등록
         binding.searchBox.btnSubmit.setOnClickListener(v -> onSearchButtonClicked());
+        binding.searchBox.btnSelectGenre.setOnClickListener(v->onGenreButtonChecked());
     }
 
     /**
@@ -85,16 +89,45 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
 
         // 입력값이 존재 하는지 체크
         String searchKey = binding.searchBox.etSearch.getText().toString();
-
-        if(!TextUtils.isEmpty(searchKey)) {
-            presenter.onSearchButtonClicked(searchKey);
-            binding.recyclerMovie.scrollToPosition(0);
-            binding.emptyView.setText("");
-            KeyboardUtil.closeKeyboard(this, binding.searchBox.etSearch);
-
-        } else {
-            makeToast(getString(R.string.search_hint));
+        //네트워크 연결 상태 확인
+        if(!NetworkUtil.isNetworkConnected(this)) {
+            makeToast(getString(R.string.network_state_unconnected));
         }
+        else {
+            if (!TextUtils.isEmpty(searchKey)) {
+                presenter.onSearchButtonClicked(searchKey,genreIndex);
+                binding.recyclerMovie.scrollToPosition(0);
+                binding.emptyView.setText("");
+                KeyboardUtil.closeKeyboard(this, binding.searchBox.etSearch);
+
+            } else {
+                makeToast(getString(R.string.search_hint));
+            }
+        }
+    }
+    /**
+     * 장르 버튼 눌렀을 때 호출 */
+    private void onGenreButtonChecked(){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.select_genre))
+                .setCancelable(false)
+                .setNegativeButton(getString(R.string.select_genre_dialog_cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setItems(R.array.genre, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        genreIndex = which;
+                        binding.searchBox.btnSelectGenre.setText(getResources().getStringArray(R.array.genre)[which]);
+
+                    }
+                });
+
+        builder.show();
     }
 
     /**
