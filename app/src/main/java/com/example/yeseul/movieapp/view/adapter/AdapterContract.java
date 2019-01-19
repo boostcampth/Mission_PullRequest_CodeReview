@@ -7,6 +7,8 @@ public interface AdapterContract {
     interface View {
 
         void setOnItemClickListener(OnItemClickListener itemClickListener);
+
+        void setOnItemLongClickListener(OnItemLongClickListener itemLongClickListener);
     }
 
     interface Model<T> {

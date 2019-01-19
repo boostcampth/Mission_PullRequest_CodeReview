@@ -2,7 +2,7 @@ package com.example.yeseul.movieapp.view.main;
 
 import android.annotation.SuppressLint;
 import android.databinding.ObservableBoolean;
-import android.databinding.ObservableField;
+import android.text.Html;
 
 import com.example.yeseul.movieapp.data.source.movie.MovieRepository;
 import com.example.yeseul.movieapp.mapper.MovieMapper;
@@ -60,10 +60,25 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
+    public void onDialogItemClicked(Boolean isInclusion, int position) {
+        Movie movie=this.adapterModel.getItem(position);
+        movie.setTitle(Html.fromHtml(movie.getTitle()).toString());
+        if(isInclusion){
+            repository.deleteMoive(movie.getTitle());
+        }else{
+            repository.insertMovie(movie);
+        }
+    }
+
+    @Override
     public void setAdapterView(AdapterContract.View adapterView) {
         this.adapterView = adapterView;
         this.adapterView.setOnItemClickListener(position ->
                 view.startMovieDetailPage(this.adapterModel.getItem(position).getLinkUrl()));
+        this.adapterView.setOnItemLongClickListener(position -> {
+            Boolean result=repository.findMovie(this.adapterModel.getItem(position).getTitle());
+            view.showBookMarkDialog(result,position);
+        });
     }
 
     @Override

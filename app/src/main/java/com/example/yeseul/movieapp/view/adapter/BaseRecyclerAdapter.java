@@ -11,6 +11,7 @@ public abstract class BaseRecyclerAdapter<T, H extends RecyclerView.ViewHolder> 
 
     protected List<T> itemList;
     protected OnItemClickListener onItemClickListener;
+    protected OnItemLongClickListener onItemLongClickListener;
     protected Context context;
 
     public BaseRecyclerAdapter(Context context){
@@ -29,6 +30,11 @@ public abstract class BaseRecyclerAdapter<T, H extends RecyclerView.ViewHolder> 
     @Override
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
+    }
+
+    @Override
+    public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
+        this.onItemLongClickListener=onItemLongClickListener;
     }
 
     @Override
@@ -193,6 +199,13 @@ public abstract class BaseRecyclerAdapter<T, H extends RecyclerView.ViewHolder> 
 
         });
 
+        holder.itemView.setOnLongClickListener(view -> {
+
+            if(onItemLongClickListener!=null){
+                onItemLongClickListener.onItemLongClick(position);
+            }
+            return true;
+        });
         onBindView((H) holder, position);
     }
 
