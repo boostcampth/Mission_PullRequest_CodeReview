@@ -8,6 +8,7 @@ import com.example.yeseul.movieapp.data.source.movie.MovieRepository;
 import com.example.yeseul.movieapp.mapper.MovieMapper;
 import com.example.yeseul.movieapp.pojo.Movie;
 import com.example.yeseul.movieapp.view.adapter.AdapterContract;
+import com.example.yeseul.movieapp.view.adapter.OnItemClickListener;
 
 import java.util.List;
 
@@ -62,8 +63,18 @@ public class MainPresenter implements MainContract.Presenter {
     @Override
     public void setAdapterView(AdapterContract.View adapterView) {
         this.adapterView = adapterView;
-        this.adapterView.setOnItemClickListener(position ->
-                view.startMovieDetailPage(this.adapterModel.getItem(position).getLinkUrl()));
+        this.adapterView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                view.startMovieDetailPage(adapterModel.getItem(position).getLinkUrl());
+            }
+
+            @Override
+            public void onShareButtonClicked(int position) {
+                view.startSharing(adapterModel.getItem(position).getLinkUrl());
+            }
+        });
+
     }
 
     @Override
