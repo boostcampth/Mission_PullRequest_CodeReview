@@ -1,15 +1,18 @@
 package com.example.yeseul.movieapp.view.main;
 
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.customtabs.CustomTabsIntent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Toast;
 
 import com.example.yeseul.movieapp.R;
 import com.example.yeseul.movieapp.data.source.movie.MovieRepository;
@@ -17,9 +20,12 @@ import com.example.yeseul.movieapp.databinding.ActivityMovieBinding;
 import com.example.yeseul.movieapp.utils.KeyboardUtil;
 import com.example.yeseul.movieapp.view.BaseActivity;
 
+import java.util.HashMap;
+
 public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresenter> implements MainContract.View {
 
     private MovieListAdapter adapter;
+
 
     @Override
     protected int getLayoutId() {
@@ -44,6 +50,9 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
         initView();
 
         presenter.onViewCreated();
+
+
+
     }
 
     private void initView() {
@@ -66,6 +75,7 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
             }
         });
 
+
         // 키보드 검색 버튼 리스너 등록
         binding.searchBox.etSearch.setOnEditorActionListener((v, actionId, event) -> {
             if(actionId == EditorInfo.IME_ACTION_SEARCH){
@@ -77,6 +87,44 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
 
         // 검색 버튼 리스너 등록
         binding.searchBox.btnSubmit.setOnClickListener(v -> onSearchButtonClicked());
+
+        // 필터 버튼 리스터 등록
+        binding.searchBox.btnFilter.setOnClickListener(v -> onFilterButtonClicked());
+
+    }
+
+    //필터 설정
+    private void onFilterButtonClicked() {
+
+
+            //국가 선택
+            AlertDialog.Builder cDialog = new AlertDialog.Builder(this);
+            cDialog.setTitle(R.string.country)
+                    .setItems(R.array.country,
+                            (dialog, which) -> {
+                                presenter.setCountry(Integer.toString(which));
+                                //country
+                            }
+                            )
+                    .setOnDismissListener( (dialog) -> presenter.setFilter( getResources().getStringArray(R.array.genre)[Integer.parseInt(presenter.getGenre())],
+                            getResources().getStringArray(R.array.country)[Integer.parseInt(presenter.getCountry())]
+                            ) );
+
+
+            //장르 선택
+            AlertDialog.Builder gDialog = new AlertDialog.Builder(this);
+            gDialog.setTitle(R.string.genre)
+                    .setItems(R.array.genre,
+                            (dialog, which) -> {
+
+                                presenter.setGenre(Integer.toString(which));
+                        }
+                    )
+                    .setOnDismissListener( (dialog) -> cDialog.show() );
+
+            gDialog.show();
+
+
     }
 
     /**
@@ -86,8 +134,9 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
         // 입력값이 존재 하는지 체크
         String searchKey = binding.searchBox.etSearch.getText().toString();
 
+
         if(!TextUtils.isEmpty(searchKey)) {
-            presenter.onSearchButtonClicked(searchKey);
+            presenter.onSearchButtonClicked(searchKey, presenter.getGenre(), getResources().getStringArray(R.array.countryCode)[Integer.parseInt(presenter.getCountry())] );
             binding.recyclerMovie.scrollToPosition(0);
             binding.emptyView.setText("");
             KeyboardUtil.closeKeyboard(this, binding.searchBox.etSearch);
