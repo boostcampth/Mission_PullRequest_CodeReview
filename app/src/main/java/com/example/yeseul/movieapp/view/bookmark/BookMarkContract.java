@@ -7,7 +7,7 @@ import com.example.yeseul.movieapp.view.adapter.AdapterContract;
 
 public interface BookMarkContract {
 
-    interface VIew extends BaseView{
+    interface View extends BaseView{
 
         void onSearchResultEmpty();
 

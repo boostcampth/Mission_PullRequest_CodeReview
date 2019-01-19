@@ -8,13 +8,13 @@ import java.util.List;
 
 public class BookMarkPresenter implements BookMarkContract.Presenter {
 
-    private BookMarkContract.VIew view;
+    private BookMarkContract.View view;
     private MovieRepository repository;
     private AdapterContract.View adapterView;
     private AdapterContract.Model<Movie> adapterModel;
 
 
-    public BookMarkPresenter(BookMarkContract.VIew view, MovieRepository repository) {
+    public BookMarkPresenter(BookMarkContract.View view, MovieRepository repository) {
         this.view = view;
         this.repository = repository;
     }

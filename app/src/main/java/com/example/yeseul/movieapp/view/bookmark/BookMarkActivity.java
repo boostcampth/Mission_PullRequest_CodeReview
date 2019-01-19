@@ -15,7 +15,7 @@ import com.example.yeseul.movieapp.databinding.ActivityBookmarkBinding;
 import com.example.yeseul.movieapp.view.BaseActivity;
 import com.example.yeseul.movieapp.view.main.MovieListAdapter;
 
-public class BookMarkActivity extends BaseActivity<ActivityBookmarkBinding, BookMarkPresenter> implements BookMarkContract.VIew {
+public class BookMarkActivity extends BaseActivity<ActivityBookmarkBinding, BookMarkPresenter> implements BookMarkContract.View {
 
     private MovieListAdapter adapter;
 
