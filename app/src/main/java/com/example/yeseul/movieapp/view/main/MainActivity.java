@@ -100,36 +100,20 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
             //국가 선택
             AlertDialog.Builder cDialog = new AlertDialog.Builder(this);
             cDialog.setTitle(R.string.country)
-                    .setItems(R.array.country, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //country = countryMap.get(getResources().getStringArray(R.array.country)[which]);
-                            country = getResources().getStringArray(R.array.country)[which];
-                        }
-                    }).setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    presenter.setFilter(genre, country);
-                }
-            });
+                    .setItems(R.array.country,
+                            (dialog, which) -> { country = getResources().getStringArray(R.array.country)[which];}
+                            )
+                    .setOnDismissListener( (dialog) -> presenter.setFilter(genre, country) );
 
 
             //장르 선택
             AlertDialog.Builder gDialog = new AlertDialog.Builder(this);
             gDialog.setTitle(R.string.genre)
-                    .setItems(R.array.genre, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //genre = Integer.toString(which);
-                            genre = getResources().getStringArray(R.array.genre)[which];
-                        }
-                    }).setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    //orderFlag = true;
-                    cDialog.show();
-                }
-            });
+                    .setItems(R.array.genre,
+                            (dialog, which) ->
+                            {genre = getResources().getStringArray(R.array.genre)[which];}
+                    )
+                    .setOnDismissListener( (dialog) -> cDialog.show() );
 
             gDialog.show();
 
