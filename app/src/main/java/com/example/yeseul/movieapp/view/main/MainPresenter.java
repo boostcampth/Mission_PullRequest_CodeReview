@@ -23,7 +23,7 @@ public class MainPresenter implements MainContract.Presenter {
     private AdapterContract.Model<Movie> adapterModel;
 
     private String searchKey = ""; // 검색 키워드
-    private final int PAGE_UNIT = 20; // 한번에 가져올 데이터 개수
+    private final int PAGE_UNIT = 15; // 한번에 가져올 데이터 개수
     private int currentPage = 0; // 현재 페이지 index
     private boolean isEndOfPage = false; // 페이지 끝 flag
 
