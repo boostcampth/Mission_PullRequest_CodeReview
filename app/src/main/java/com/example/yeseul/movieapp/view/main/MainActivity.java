@@ -97,17 +97,6 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
     //필터 설정
     private void onFilterButtonClicked() {
 
-
-           /* HashMap <String,String> countryMap = new HashMap<>();
-            countryMap.put("전체","");
-            countryMap.put("한국","KR");
-            countryMap.put("일본","JP");
-            countryMap.put("미국","US");
-            countryMap.put("홍콩","HK");
-            countryMap.put("영국","GB");
-            countryMap.put("프랑스","FR");
-            countryMap.put("기타","ETC");*/
-
             //국가 선택
             AlertDialog.Builder cDialog = new AlertDialog.Builder(this);
             cDialog.setTitle(R.string.country)
