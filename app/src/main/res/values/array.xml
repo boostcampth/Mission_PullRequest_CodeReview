@@ -47,4 +47,17 @@
 
     </string-array>
 
+    <string-array name="countryCode">
+
+        <item>ALL</item>
+        <item>KR</item>
+        <item>JP</item>
+        <item>US</item>
+        <item>HK</item>
+        <item>GB</item>
+        <item>FR</item>
+        <item>ETC</item>
+
+    </string-array>
+
 </resources>

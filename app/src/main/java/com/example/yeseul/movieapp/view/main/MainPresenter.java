@@ -8,7 +8,6 @@ import com.example.yeseul.movieapp.data.source.movie.MovieRepository;
 import com.example.yeseul.movieapp.mapper.MovieMapper;
 import com.example.yeseul.movieapp.pojo.Movie;
 import com.example.yeseul.movieapp.view.adapter.AdapterContract;
-import com.example.yeseul.movieapp.view.custom.FilterView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,8 +24,8 @@ public class MainPresenter implements MainContract.Presenter {
     private AdapterContract.Model<Movie> adapterModel;
 
     private String searchKey = ""; // 검색 키워드
-    private String genre = "";
-    private String country = "";
+    private String genre = "0";
+    private String country = "0";
     private final int PAGE_UNIT = 20; // 한번에 가져올 데이터 개수
     private int currentPage = 0; // 현재 페이지 index
     private boolean isEndOfPage = false; // 페이지 끝 flag
@@ -92,10 +91,7 @@ public class MainPresenter implements MainContract.Presenter {
 
         isLoading.set(true);
 
-        HashMap<String,String> genreMap = FilterView.getGenreMap();
-        HashMap<String,String> countryMap = FilterView.getCountryMap();
-
-        repository.searchMovies(MovieMapper.toRequest(searchKey, PAGE_UNIT, (PAGE_UNIT * currentPage++) + 1, genreMap.get(genre), countryMap.get(country)))
+        repository.searchMovies(MovieMapper.toRequest(searchKey, PAGE_UNIT, (PAGE_UNIT * currentPage++) + 1, genre, country))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {
 
@@ -129,5 +125,21 @@ public class MainPresenter implements MainContract.Presenter {
                     // 뷰에 알리기
                     view.onSearchResultEmpty(searchKey);
                 });
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 }

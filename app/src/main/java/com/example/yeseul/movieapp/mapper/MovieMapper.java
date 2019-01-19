@@ -19,11 +19,11 @@ public class MovieMapper {
         queryMap.put(QUERY_STRING_PAGE_UNIT, ""+pageUnit);
         queryMap.put(QUERY_STRING_START, ""+start);
 
-        if( genre != null && !genre.equals("0")){
+        if( genre != null && !genre.equals("0") && !genre.equals("")){
             queryMap.put(QUERY_STRING_GENRE, genre);
         }
 
-        if( country != null && !country.equals("") ){
+        if( country != null && !country.equals("ALL") && !country.equals("")){
             queryMap.put(QUERY_STRING_COUNTRY, country);
         }
 

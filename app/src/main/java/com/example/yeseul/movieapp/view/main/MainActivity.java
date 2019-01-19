@@ -25,8 +25,7 @@ import java.util.HashMap;
 public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresenter> implements MainContract.View {
 
     private MovieListAdapter adapter;
-    private String genre;
-    private String country;
+
 
     @Override
     protected int getLayoutId() {
@@ -52,7 +51,7 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
 
         presenter.onViewCreated();
 
-        country = "";
+
 
     }
 
@@ -97,21 +96,29 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
     //필터 설정
     private void onFilterButtonClicked() {
 
+
             //국가 선택
             AlertDialog.Builder cDialog = new AlertDialog.Builder(this);
             cDialog.setTitle(R.string.country)
                     .setItems(R.array.country,
-                            (dialog, which) -> { country = getResources().getStringArray(R.array.country)[which];}
+                            (dialog, which) -> {
+                                presenter.setCountry(Integer.toString(which));
+                                //country
+                            }
                             )
-                    .setOnDismissListener( (dialog) -> presenter.setFilter(genre, country) );
+                    .setOnDismissListener( (dialog) -> presenter.setFilter( getResources().getStringArray(R.array.genre)[Integer.parseInt(presenter.getGenre())],
+                            getResources().getStringArray(R.array.country)[Integer.parseInt(presenter.getCountry())]
+                            ) );
 
 
             //장르 선택
             AlertDialog.Builder gDialog = new AlertDialog.Builder(this);
             gDialog.setTitle(R.string.genre)
                     .setItems(R.array.genre,
-                            (dialog, which) ->
-                            {genre = getResources().getStringArray(R.array.genre)[which];}
+                            (dialog, which) -> {
+
+                                presenter.setGenre(Integer.toString(which));
+                        }
                     )
                     .setOnDismissListener( (dialog) -> cDialog.show() );
 
@@ -127,8 +134,9 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
         // 입력값이 존재 하는지 체크
         String searchKey = binding.searchBox.etSearch.getText().toString();
 
+
         if(!TextUtils.isEmpty(searchKey)) {
-            presenter.onSearchButtonClicked(searchKey,genre,country);
+            presenter.onSearchButtonClicked(searchKey, presenter.getGenre(), getResources().getStringArray(R.array.countryCode)[Integer.parseInt(presenter.getCountry())] );
             binding.recyclerMovie.scrollToPosition(0);
             binding.emptyView.setText("");
             KeyboardUtil.closeKeyboard(this, binding.searchBox.etSearch);
