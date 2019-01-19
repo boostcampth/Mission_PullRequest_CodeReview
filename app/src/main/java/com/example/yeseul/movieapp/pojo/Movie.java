@@ -5,6 +5,12 @@ import com.google.gson.annotations.SerializedName;
 
 public class Movie {
 
+    /*
+     * SerializedName  : Gson 을 이용해 Json 에서 Object 로 객체를 변경시킬 때 Json 에 등록된 이름과 연결지어 준다.
+     * Expose          : Expose Annotation 이 존재하면 Gson 을 이용할 때 해당 변수는 노출시키지 않게 됨
+     *
+     * */
+
     @SerializedName("title")
     @Expose
     private String title;

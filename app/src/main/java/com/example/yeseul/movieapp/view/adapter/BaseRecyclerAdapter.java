@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseRecyclerAdapter<T, H extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements AdapterContract.View, AdapterContract.Model<T>{
+public abstract class BaseRecyclerAdapter<T, H extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements AdapterContract.View,  AdapterContract.Model<T>{
 
     protected List<T> itemList;
     protected OnItemClickListener onItemClickListener;
@@ -30,6 +30,7 @@ public abstract class BaseRecyclerAdapter<T, H extends RecyclerView.ViewHolder> 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
+
 
     @Override
     public long getItemId(int position) {
@@ -196,5 +197,6 @@ public abstract class BaseRecyclerAdapter<T, H extends RecyclerView.ViewHolder> 
         onBindView((H) holder, position);
     }
 
+    // 각 ViewHolder 에 맞게 Item 을 설정해주는 역할
     protected abstract void onBindView(H holder, int position);
 }

@@ -8,6 +8,8 @@ import java.util.Map;
 
 import io.reactivex.Single;
 
+/*
+ * Presenter 에서 Repository 에 접근할 때 사용하는 ref */
 public class MovieRepository implements MovieDataSource {
 
     private static MovieRepository movieRepository = null;

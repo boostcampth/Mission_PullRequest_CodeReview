@@ -15,6 +15,7 @@ public class GlideUtil {
         GlideApp.with(imageView).load(url).into(imageView);
     }
 
+    /* URL 이 변경되면 해당 Image 를 불러오도록 설정 */
     @BindingAdapter({"imageCenterCrop"})
     public static void loadImageCenterCrop(ImageView imageView, String url){
 

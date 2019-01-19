@@ -5,4 +5,19 @@
     <string name="search_hint">검색어를 입력하세요.</string>
     <string name="search_submit">검색</string>
     <string name="search_result_empty">에 대한 검색결과가 없습니다.</string>
+
+    <string name="search_default_order">사전순</string>
+
+    <string name="order_title">정렬 방법</string>
+    <string name="order_ok">확인</string>
+    <string name="order_cancel">취소</string>
+
+
+    <string-array name="search_order">
+        <item>사전순</item>
+        <item>최신순</item>
+        <item>오래된순</item>
+        <item>높은 평점 순</item>
+        <item>낮은 평점 순</item>
+    </string-array>
 </resources>
