@@ -48,19 +48,24 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
 
     private void initView() {
 
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+
         // recyclerView 생성
-        binding.recyclerMovie.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        binding.recyclerMovie.setLayoutManager(layoutManager);
         binding.recyclerMovie.setAdapter(adapter);
         binding.recyclerMovie.setEmptyView(binding.emptyView);
         binding.recyclerMovie.setNestedScrollingEnabled(false);
         binding.recyclerMovie.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         // 최하단 스크롤 감지
-        binding.recyclerMovie.setOnScrollListener(new RecyclerView.OnScrollListener(){
+        binding.recyclerMovie.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if(!binding.recyclerMovie.canScrollVertically(1)){
+
+                int lastVisiblePosition = layoutManager.findLastCompletelyVisibleItemPosition();
+
+                if(adapter.getItemCount() <= lastVisiblePosition+5) {
                     presenter.loadItems(false);
                 }
             }
@@ -117,5 +122,19 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
                 .build();
 
         customTabsIntent.launchUrl(this, Uri.parse(linkUrl));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        presenter.clearDisposables();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        presenter.disposeDisposables(); //Presenter의 메소드 호출.
     }
 }

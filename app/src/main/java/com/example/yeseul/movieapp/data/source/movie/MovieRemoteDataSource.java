@@ -29,7 +29,7 @@ public class MovieRemoteDataSource implements MovieDataSource{
 
         return RetrofitClient.getClient().create(MovieApi.class)
                 .searchMovies(request)
-                .subscribeOn(Schedulers.newThread());
+                .subscribeOn(Schedulers.io());
     }
 
 }
