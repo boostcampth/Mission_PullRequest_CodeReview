@@ -37,6 +37,18 @@ public class Movie {
     @Expose
     private String userRating;
 
+
+    public Movie(String title, String linkUrl, String imageUrl, String subtitle, String pubDate, String director, String actor, String userRating) {
+        this.title = title;
+        this.linkUrl = linkUrl;
+        this.imageUrl = imageUrl;
+        this.subtitle = subtitle;
+        this.pubDate = pubDate;
+        this.director = director;
+        this.actor = actor;
+        this.userRating = userRating;
+    }
+
     public String getTitle() {
         return title;
     }

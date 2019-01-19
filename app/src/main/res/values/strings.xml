@@ -5,4 +5,11 @@
     <string name="search_hint">검색어를 입력하세요.</string>
     <string name="search_submit">검색</string>
     <string name="search_result_empty">에 대한 검색결과가 없습니다.</string>
+    <string name="bookmark">즐겨찾기</string>
+    <string name="bookmark_unchecked">즐겨찾기에 추가 하시겠습니까?</string>
+    <string name="bookmark_checked">즐겨찾기에서 삭제 하시겠습니까?</string>
+    <string name="bookmark_empty">즐겨찾기 목록이 없습니다.</string>
+    <string name="positive_button">예</string>
+    <string name="negative_button">아니요</string>
+    <string name="bookmark_change">설정이 변경되었습니다.</string>
 </resources>
