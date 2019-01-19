@@ -3,6 +3,9 @@ package com.example.yeseul.movieapp.view.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+
+import com.example.yeseul.movieapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -192,6 +195,14 @@ public abstract class BaseRecyclerAdapter<T, H extends RecyclerView.ViewHolder> 
             }
 
         });
+        holder.itemView.findViewById(R.id.btn_share).setOnClickListener(view -> {
+
+            // button click listener 등록
+            if(onItemClickListener != null) {
+                onItemClickListener.onShareButtonClicked(position);
+            }
+        });
+
 
         onBindView((H) holder, position);
     }

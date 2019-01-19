@@ -1,5 +1,6 @@
 package com.example.yeseul.movieapp.view.main;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Toast;
 
 import com.example.yeseul.movieapp.R;
 import com.example.yeseul.movieapp.data.source.movie.MovieRepository;
@@ -117,5 +119,17 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
                 .build();
 
         customTabsIntent.launchUrl(this, Uri.parse(linkUrl));
+    }
+
+    /**
+     *  특정영화 링크 공유하기
+     */
+    @Override
+    public void startSharing(String linkUrl){
+        Intent linkShare = new Intent(Intent.ACTION_SEND);
+        linkShare.setType("text/plain");
+        linkShare.putExtra(Intent.EXTRA_TEXT, linkUrl);
+        startActivity(Intent.createChooser(linkShare, "링크 공유하기"));
+
     }
 }
