@@ -12,6 +12,7 @@ import com.example.yeseul.movieapp.view.adapter.AdapterContract;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class MainPresenter implements MainContract.Presenter {
 
@@ -26,6 +27,8 @@ public class MainPresenter implements MainContract.Presenter {
     private final int PAGE_UNIT = 15; // 한번에 가져올 데이터 개수
     private int currentPage = 0; // 현재 페이지 index
     private boolean isEndOfPage = false; // 페이지 끝 flag
+
+    private CompositeDisposable disposables = new CompositeDisposable();
 
     public MainPresenter(MainContract.View view, MovieRepository repository) {
         this.view = view;
@@ -76,39 +79,56 @@ public class MainPresenter implements MainContract.Presenter {
 
         isLoading.set(true);
 
-        repository.searchMovies(MovieMapper.toRequest(searchKey, PAGE_UNIT, (PAGE_UNIT * currentPage++) + 1))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(response -> {
+        disposables.add(
+                repository.searchMovies(MovieMapper.toRequest(searchKey, PAGE_UNIT, (PAGE_UNIT * currentPage++) + 1))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(response -> {
 
-                    // 로딩 flag OFF
-                    isLoading.set(false);
+                            // 로딩 flag OFF
+                            isLoading.set(false);
 
-                    List<Movie> movieList = response.getMovieList();
+                            List<Movie> movieList = response.getMovieList();
 
-                    if(movieList.size() == 0){ // 검색 결과가 없는 경우
-                        // 페이지 끝 flag ON
-                        isEndOfPage = true;
-                        // 뷰에 알리기
-                        view.onSearchResultEmpty(searchKey);
-                        return;
-                    }
+                            if (movieList.size() == 0) { // 검색 결과가 없는 경우
+                                // 페이지 끝 flag ON
+                                isEndOfPage = true;
+                                // 뷰에 알리기
+                                view.onSearchResultEmpty(searchKey);
+                                return;
+                            }
 
-                    if ((PAGE_UNIT * currentPage) >= response.getTotal() || movieList.size() < PAGE_UNIT) { // 마지막 페이지거나 검색 결과가 10개 미만
-                        // 페이지 끝 flag ON
-                        isEndOfPage = true;
-                    }
+                            if ((PAGE_UNIT * currentPage) >= response.getTotal() || movieList.size() < PAGE_UNIT) { // 마지막 페이지거나 검색 결과가 10개 미만
+                                // 페이지 끝 flag ON
+                                isEndOfPage = true;
+                            }
 
-                    // 어댑터에 리스트 추가
-                    adapterModel.addItems(movieList);
+                            // 어댑터에 리스트 추가
+                            adapterModel.addItems(movieList);
 
-                }, error -> {
+                        }, error -> {
 
-                    // 로딩 flag OFF
-                    isLoading.set(false);
-                    // 페이지 끝 flag ON
-                    isEndOfPage = true;
-                    // 뷰에 알리기
-                    view.onSearchResultEmpty(searchKey);
-                });
+                            // 로딩 flag OFF
+                            isLoading.set(false);
+                            // 페이지 끝 flag ON
+                            isEndOfPage = true;
+                            // 뷰에 알리기
+                            view.onSearchResultEmpty(searchKey);
+                        }));
+    }
+
+    /**
+     * CompositeDisposable 을 clear .
+     */
+    public void clearDisposables() {
+        disposables.clear();
+    }
+
+    /**
+     * CompositeDisposable 을 dispose .
+     */
+    public void disposeDisposables() {
+        if (!disposables.isDisposed()) {
+            disposables.dispose();
+        }
     }
 }

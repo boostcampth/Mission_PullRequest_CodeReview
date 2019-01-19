@@ -123,4 +123,18 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
 
         customTabsIntent.launchUrl(this, Uri.parse(linkUrl));
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        presenter.clearDisposables();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        presenter.disposeDisposables(); //Presenter의 메소드 호출.
+    }
 }
