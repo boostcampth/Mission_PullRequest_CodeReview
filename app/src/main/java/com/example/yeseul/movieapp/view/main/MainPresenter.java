@@ -98,6 +98,20 @@ public class MainPresenter implements MainContract.Presenter {
                         isEndOfPage = true;
                     }
 
+                    for(int i=0; i<movieList.size(); i++) {
+                        Movie movie = movieList.get(i);
+                        String director = movie.getDirector();
+                        String actor = movie.getActor();
+                        if(director.length() != 0) {
+                            director = director.substring(0, director.length() - 1).replaceAll("[|]", ",");
+                        }
+                        if(actor.length() != 0) {
+                            actor = actor.substring(0, actor.length() - 1).replaceAll("[|]", ",");
+                        }
+                        movie.setDirector(director);
+                        movie.setActor(actor);
+                    }
+
                     // 어댑터에 리스트 추가
                     adapterModel.addItems(movieList);
 
