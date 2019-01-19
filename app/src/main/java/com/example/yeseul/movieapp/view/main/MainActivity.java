@@ -20,6 +20,7 @@ import com.example.yeseul.movieapp.view.BaseActivity;
 public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresenter> implements MainContract.View {
 
     private MovieListAdapter adapter;
+    private boolean customTabsState;
 
     @Override
     protected int getLayoutId() {
@@ -45,6 +46,15 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
 
         presenter.onViewCreated();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(!customTabsState) {
+            customTabsState = true;
+        }
+    }
+
 
     private void initView() {
 
@@ -111,11 +121,13 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
      * 영화 상세 정보 URL 로 연결 */
     @Override
     public void startMovieDetailPage(String linkUrl) {
+        if(customTabsState) {
+            customTabsState = false;
+            CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
+                    .setToolbarColor(getResources().getColor(R.color.colorPrimary))
+                    .build();
 
-        CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
-                .setToolbarColor(getResources().getColor(R.color.colorPrimary))
-                .build();
-
-        customTabsIntent.launchUrl(this, Uri.parse(linkUrl));
+            customTabsIntent.launchUrl(this, Uri.parse(linkUrl));
+        }
     }
 }
