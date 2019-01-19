@@ -7,4 +7,8 @@
     <string name="search_result_empty">에 대한 검색결과가 없습니다.</string>
 
     <string name="share_message">공유하기</string>
+    <string name="str_viewholder_title">영화 타이틀</string>
+    <string name="str_viewholder_pubdate">개봉박두</string>
+    <string name="str_viewholder_director">감독</string>
+    <string name="str_viewholder_actor">배우</string>
 </resources>

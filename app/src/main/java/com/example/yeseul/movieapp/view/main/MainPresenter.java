@@ -74,6 +74,14 @@ public class MainPresenter implements MainContract.Presenter {
                 view.shareMovieDetail(MainPresenter.this.adapterModel.getItem(position).getTitle(),
                         MainPresenter.this.adapterModel.getItem(position).getLinkUrl());
             }
+
+            @Override
+            public void onFavoriteClick(int position, boolean isExist) {
+                view.favoriteMovie();
+
+                // MainPresenter.this.adapterModel.getItem(position)
+                // 이곳에서 db 추가/삭제 작업
+            }
         });
     }
 

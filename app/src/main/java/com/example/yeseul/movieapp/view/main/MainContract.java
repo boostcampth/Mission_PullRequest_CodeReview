@@ -14,6 +14,8 @@ public interface MainContract {
         void startMovieDetailPage(String linkUrl);
 
         void shareMovieDetail(String title, String linkUrl);
+
+        void favoriteMovie();
     }
 
     interface Presenter extends BasePresenter {

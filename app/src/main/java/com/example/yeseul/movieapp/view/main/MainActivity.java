@@ -15,6 +15,7 @@ import android.view.inputmethod.EditorInfo;
 import com.example.yeseul.movieapp.R;
 import com.example.yeseul.movieapp.data.source.movie.MovieRepository;
 import com.example.yeseul.movieapp.databinding.ActivityMovieBinding;
+import com.example.yeseul.movieapp.pojo.Movie;
 import com.example.yeseul.movieapp.utils.KeyboardUtil;
 import com.example.yeseul.movieapp.view.BaseActivity;
 
@@ -130,5 +131,13 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, title);
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, linkUrl);
         startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_message)));
+    }
+
+    /**
+     * 영화 좋아요 버튼 클릭
+     */
+    @Override
+    public void favoriteMovie() {
+        makeToast("★ 버튼 클릭");
     }
 }

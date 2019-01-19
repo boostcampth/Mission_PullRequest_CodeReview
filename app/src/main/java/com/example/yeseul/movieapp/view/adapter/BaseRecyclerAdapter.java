@@ -3,6 +3,9 @@ package com.example.yeseul.movieapp.view.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ImageView;
+
+import com.example.yeseul.movieapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -193,6 +196,14 @@ public abstract class BaseRecyclerAdapter<T, H extends RecyclerView.ViewHolder> 
             holder.itemView.setOnLongClickListener(view -> {
                 onItemClickListener.onItemLongClick(position);
                 return true;
+            });
+
+            ImageView favoriteButton = holder.itemView.findViewById(R.id.btn_favorite);
+
+            favoriteButton.setOnClickListener(view -> {
+                onItemClickListener.onFavoriteClick(position, !favoriteButton.isSelected());
+                if (favoriteButton.isSelected()) favoriteButton.setSelected(false);
+                else favoriteButton.setSelected(true);
             });
         }
 

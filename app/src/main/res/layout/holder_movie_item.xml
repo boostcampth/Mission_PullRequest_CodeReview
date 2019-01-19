@@ -1,81 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
-            type="com.example.yeseul.movieapp.pojo.Movie"/>
+            type="com.example.yeseul.movieapp.pojo.Movie" />
     </data>
 
-    <LinearLayout
-        android:padding="@dimen/padding_main"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:padding="@dimen/padding_main">
 
         <ImageView
+            android:id="@+id/imageView"
+            imageCenterCrop="@{item.imageUrl}"
             android:layout_width="75dp"
             android:layout_height="100dp"
-            imageCenterCrop="@{item.imageUrl}"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@mipmap/ic_launcher" />
 
-        <LinearLayout
-            android:layout_marginLeft="@dimen/padding_main"
-            android:layout_marginStart="@dimen/padding_main"
+        <TextView
+            android:id="@+id/tv_title"
+            boldText="@{item.title}"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:ellipsize="end"
+            android:lineSpacingExtra="@dimen/padding_ultra_small"
+            android:maxLines="2"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_size_main"
+            app:layout_constraintEnd_toStartOf="@+id/btn_favorite"
+            app:layout_constraintStart_toEndOf="@id/imageView"
+            tools:text="@string/str_viewholder_title" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_main"
-                android:textColor="@android:color/black"
-                android:maxLines="2"
-                android:ellipsize="end"
-                android:lineSpacingExtra="@dimen/padding_ultra_small"
-                boldText="@{item.title}"/>
+        <ImageView
+            android:id="@+id/btn_favorite"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/selector_favorite"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_title"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <RatingBar
-                style="@style/ratingBar"
-                android:layout_marginTop="@dimen/padding_ultra_small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:rating="@{item.userRating}"
-                android:stepSize="0.5"
-                android:numStars="5"/>
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="@style/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_ultra_small"
+            android:numStars="5"
+            android:stepSize="0.5"
+            app:layout_constraintStart_toStartOf="@id/tv_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:rating="@{item.userRating}"
+            tools:rating="5" />
 
-            <TextView
-                android:layout_marginTop="@dimen/padding_ultra_small"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_small"
-                android:textColor="@android:color/black"
-                android:text="@{item.pubDate}"/>
+        <TextView
+            android:id="@+id/tv_pubdate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_ultra_small"
+            android:text="@{item.pubDate}"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintStart_toStartOf="@id/tv_title"
+            app:layout_constraintTop_toBottomOf="@id/ratingBar"
+            tools:text="@string/str_viewholder_pubdate" />
 
-            <TextView
-                android:layout_marginTop="@dimen/padding_ultra_small"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:ellipsize="end"
-                android:textSize="@dimen/text_size_small"
-                android:textColor="@android:color/black"
-                boldText="@{item.director}"/>
+        <TextView
+            android:id="@+id/tv_director"
+            boldText="@{item.director}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_ultra_small"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_pubdate"
+            tools:text="@string/str_viewholder_director" />
 
-            <TextView
-                android:layout_marginTop="@dimen/padding_ultra_small"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="2"
-                android:ellipsize="end"
-                android:lineSpacingExtra="@dimen/padding_ultra_small"
-                android:textSize="@dimen/text_size_small"
-                android:textColor="@android:color/black"
-                boldText="@{item.actor}"/>
-
-        </LinearLayout>
-    </LinearLayout>
+        <TextView
+            boldText="@{item.actor}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_ultra_small"
+            android:ellipsize="end"
+            android:lineSpacingExtra="@dimen/padding_ultra_small"
+            android:maxLines="2"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_director"
+            tools:text="@string/str_viewholder_actor" />
+    </android.support.constraint.ConstraintLayout>
 </layout>
