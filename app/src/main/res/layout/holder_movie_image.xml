@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="item"
+            type="com.example.yeseul.movieapp.pojo.Movie"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_main"
+            android:layout_marginRight="@dimen/padding_main"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            image="@{item.imageUrl}"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/padding_main"
+            android:textSize="@dimen/text_size_large"
+            android:textColor="@android:color/white"
+            boldText="@{item.title}"/>
+
+    </LinearLayout>
+</layout>

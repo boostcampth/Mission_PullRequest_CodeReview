@@ -14,6 +14,8 @@ public class MovieRepository implements MovieDataSource {
 
     private MovieRemoteDataSource remoteDataSource;
 
+    private List<Movie> savedMovieList;
+
     private MovieRepository(){
         remoteDataSource = MovieRemoteDataSource.getInstance();
     }
@@ -29,5 +31,13 @@ public class MovieRepository implements MovieDataSource {
     public Single<SearchMovieResponse> searchMovies(Map<String, String> request) {
 
         return remoteDataSource.searchMovies(request);
+    }
+
+    public List<Movie> getSavedMovieList() {
+        return savedMovieList;
+    }
+
+    public void setSavedMovieList(List<Movie> savedMovieList) {
+        this.savedMovieList = savedMovieList;
     }
 }

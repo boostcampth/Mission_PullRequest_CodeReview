@@ -8,9 +8,26 @@
         <item name="android:screenOrientation">portrait</item>
     </style>
 
+    <!-- Dialog theme -->
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="windowNoTitle">true</item>
+        <item name="android:screenOrientation">portrait</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
     <!-- Rating Bar 스타일 -->
     <style name="ratingBar" parent="Widget.AppCompat.RatingBar.Small">
         <item name="colorControlNormal">@color/colorPrimary</item>
+    </style>
+
+    <!-- Button 스타일 -->
+    <style name="ButtonStyle" parent="Widget.AppCompat.ImageButton">
+        <item name="android:layout_width">@dimen/button_size_main</item>
+        <item name="android:layout_height">@dimen/button_size_main</item>
+        <item name="android:padding">@dimen/padding_small</item>
+        <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:scaleType">centerInside</item>
     </style>
 
 </resources>

@@ -3,6 +3,7 @@ package com.example.yeseul.movieapp.view.main;
 import android.annotation.SuppressLint;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
+import android.databinding.ObservableInt;
 
 import com.example.yeseul.movieapp.data.source.movie.MovieRepository;
 import com.example.yeseul.movieapp.mapper.MovieMapper;
@@ -16,6 +17,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 public class MainPresenter implements MainContract.Presenter {
 
     public final ObservableBoolean isLoading = new ObservableBoolean(false); // 로딩 중 flag 바인딩
+    public final ObservableInt totalCount = new ObservableInt(0); // 검색결과 count 바인딩
 
     private MainContract.View view;
     private MovieRepository repository;
@@ -71,6 +73,11 @@ public class MainPresenter implements MainContract.Presenter {
         this.adapterModel = adapterModel;
     }
 
+    @Override
+    public void saveMovieList() {
+        repository.setSavedMovieList(adapterModel.getItemList());
+    }
+
     @SuppressLint("CheckResult")
     private void getMovieList(){
 
@@ -83,6 +90,7 @@ public class MainPresenter implements MainContract.Presenter {
                     // 로딩 flag OFF
                     isLoading.set(false);
 
+                    totalCount.set(response.getTotal());
                     List<Movie> movieList = response.getMovieList();
 
                     if(movieList.size() == 0){ // 검색 결과가 없는 경우

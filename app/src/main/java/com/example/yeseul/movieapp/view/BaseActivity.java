@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 public abstract class BaseActivity<B extends ViewDataBinding, P extends BasePresenter> extends AppCompatActivity {
@@ -20,7 +21,11 @@ public abstract class BaseActivity<B extends ViewDataBinding, P extends BasePres
         super.onCreate(savedInstanceState);
 
         // 화면 세로 고정
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        try {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        } catch (Exception e){
+            Log.e(TAG, e.getMessage());
+        }
 
         binding = DataBindingUtil.setContentView(this, getLayoutId());
         presenter = getPresenter();

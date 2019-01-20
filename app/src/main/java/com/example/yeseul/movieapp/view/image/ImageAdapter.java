@@ -1,58 +1,46 @@
-package com.example.yeseul.movieapp.view.main;
+package com.example.yeseul.movieapp.view.image;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.yeseul.movieapp.R;
-import com.example.yeseul.movieapp.databinding.HolderMovieItemBinding;
+import com.example.yeseul.movieapp.databinding.HolderMovieImageBinding;
 import com.example.yeseul.movieapp.pojo.Movie;
 import com.example.yeseul.movieapp.view.adapter.BaseRecyclerAdapter;
 
-public class MovieListAdapter extends BaseRecyclerAdapter<Movie, MovieListAdapter.ViewHolder> {
+import java.util.List;
 
-    private ImageClickListener imageClickListener = null;
+public class ImageAdapter extends BaseRecyclerAdapter<Movie, ImageAdapter.ViewHolder> {
 
-    public MovieListAdapter(Context context) {
-        super(context);
-    }
-
-    public void setOnImageClickListener(ImageClickListener imageClickListener){
-        this.imageClickListener = imageClickListener;
+    public ImageAdapter(Context context, List<Movie> itemList) {
+        super(context, itemList);
     }
 
     @Override
     protected void onBindView(ViewHolder holder, int position) {
         holder.binding.setItem(itemList.get(position));
-
-        if(imageClickListener != null){
-            holder.binding.ivThumbnail.setOnClickListener(v -> imageClickListener.onImageClick(position));
-        }
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-        View view = LayoutInflater.from(context).inflate(R.layout.holder_movie_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.holder_movie_image, parent, false);
         return new ViewHolder(view);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        HolderMovieItemBinding binding;
+        HolderMovieImageBinding binding;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             binding = DataBindingUtil.bind(itemView);
         }
-    }
-
-    public interface ImageClickListener{
-
-        void onImageClick(int position);
     }
 }

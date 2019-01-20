@@ -18,6 +18,18 @@
             layout="@layout/layout_search_box"
             bind:presenter="@{presenter}"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:visibility="@{presenter.totalCount != 0}"
+            android:paddingLeft="@dimen/padding_main"
+            android:paddingRight="@dimen/padding_main"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/text_size_small"
+            android:text="@{String.format(@string/search_result_count, presenter.totalCount)}"
+            android:textColor="@android:color/black"
+            android:background="@drawable/line_bottom_trans"/>
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
