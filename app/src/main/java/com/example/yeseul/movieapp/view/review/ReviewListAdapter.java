@@ -12,6 +12,7 @@ import com.example.yeseul.movieapp.R;
 import com.example.yeseul.movieapp.databinding.HolderReviewItemBinding;
 import com.example.yeseul.movieapp.pojo.Review;
 import com.example.yeseul.movieapp.view.adapter.BaseRecyclerAdapter;
+import com.example.yeseul.movieapp.view.adapter.OnItemLongClickListener;
 
 public class ReviewListAdapter extends BaseRecyclerAdapter<Review, ReviewListAdapter.ViewHolder> {
 
@@ -40,4 +41,5 @@ public class ReviewListAdapter extends BaseRecyclerAdapter<Review, ReviewListAda
             binding = DataBindingUtil.bind(itemView);
         }
     }
+
 }

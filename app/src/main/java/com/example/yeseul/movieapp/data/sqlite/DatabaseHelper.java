@@ -101,10 +101,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(review.getLinkUrl())});
     }
 
-    public void deleteReview(Review review) {
+    public void deleteReview(String link) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_NAME, COLUMN_ID + " = ?",
-                new String[]{String.valueOf(review.getLinkUrl())});
+        db.delete(TABLE_NAME, COLUMN_LINK + " = ?",
+                new String[]{String.valueOf(link)});
         db.close();
     }
 

@@ -40,4 +40,5 @@ public class MovieListAdapter extends BaseRecyclerAdapter<Movie, MovieListAdapte
             binding = DataBindingUtil.bind(itemView);
         }
     }
+
 }

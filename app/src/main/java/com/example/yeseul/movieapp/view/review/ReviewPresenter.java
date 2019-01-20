@@ -1,5 +1,7 @@
 package com.example.yeseul.movieapp.view.review;
 
+import android.util.Log;
+
 import com.example.yeseul.movieapp.data.sqlite.DatabaseHelper;
 import com.example.yeseul.movieapp.pojo.Review;
 import com.example.yeseul.movieapp.view.adapter.AdapterContract;
@@ -18,7 +20,13 @@ public class ReviewPresenter implements ReviewContract.Presenter {
     }
     @Override
     public void setAdapterView(AdapterContract.View adapterView) {
+        db = new DatabaseHelper(ReviewActivity.getContext());
         this.adapterView = adapterView;
+        this.adapterView.setOnItemLongClickListener(position -> {
+            db.deleteReview(this.adapterModel.getItem(position).getLinkUrl());
+            this.adapterModel.removeItem(position);
+            view.notifyDataSetChanged();
+        });
     }
 
     @Override
@@ -40,4 +48,6 @@ public class ReviewPresenter implements ReviewContract.Presenter {
 
         adapterModel.addItems(reviewList);
     }
+
+
 }

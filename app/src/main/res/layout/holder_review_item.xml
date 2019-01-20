@@ -6,6 +6,9 @@
         <variable
             name="review"
             type="com.example.yeseul.movieapp.pojo.Review"/>
+        <variable
+            name="presenter"
+            type="com.example.yeseul.movieapp.view.main.MainPresenter"/>
     </data>
 
     <LinearLayout

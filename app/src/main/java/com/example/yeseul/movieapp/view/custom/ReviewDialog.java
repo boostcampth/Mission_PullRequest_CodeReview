@@ -1,4 +1,4 @@
-package com.example.yeseul.movieapp.view.main;
+package com.example.yeseul.movieapp.view.custom;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -18,6 +18,7 @@ import com.example.yeseul.movieapp.R;
 import com.example.yeseul.movieapp.databinding.ActivityReviewBinding;
 import com.example.yeseul.movieapp.databinding.DialogWriteReviewBinding;
 import com.example.yeseul.movieapp.pojo.Review;
+import com.example.yeseul.movieapp.view.main.MainContract;
 
 public class ReviewDialog extends DialogFragment  {
     private MainContract.Presenter listener;

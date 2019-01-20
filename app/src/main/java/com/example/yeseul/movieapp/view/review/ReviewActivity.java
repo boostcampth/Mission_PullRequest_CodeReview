@@ -58,4 +58,9 @@ public class ReviewActivity extends BaseActivity<ActivityReviewBinding, ReviewPr
     public static Context getContext() {
         return context;
     }
+
+    @Override
+    public void notifyDataSetChanged() {
+        adapter.notifyDataSetChanged();
+    }
 }

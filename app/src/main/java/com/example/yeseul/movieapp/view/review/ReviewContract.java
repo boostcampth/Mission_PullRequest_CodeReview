@@ -9,6 +9,8 @@ public interface ReviewContract {
     interface View extends BaseView {
 
         void onReviewListEmpty();
+
+        void notifyDataSetChanged();
     }
 
     interface Presenter extends BasePresenter {

@@ -71,6 +71,7 @@ public class MainPresenter implements MainContract.Presenter {
         this.adapterView.setOnItemClickListener(position -> {
                 //view.startMovieDetailPage(this.adapterModel.getItem(position).getLinkUrl()));
                 view.startReviewPage(this.adapterModel.getItem(position));
+
         });
     }
 
@@ -130,4 +131,6 @@ public class MainPresenter implements MainContract.Presenter {
         else db.insertReview(review);
         Toast.makeText(MainActivity.getContext(), "코멘트를 남기셨습니다.", Toast.LENGTH_SHORT).show();
     }
+
+
 }

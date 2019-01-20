@@ -1,6 +1,5 @@
 package com.example.yeseul.movieapp.view.main;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -18,9 +17,9 @@ import com.example.yeseul.movieapp.R;
 import com.example.yeseul.movieapp.data.source.movie.MovieRepository;
 import com.example.yeseul.movieapp.databinding.ActivityMovieBinding;
 import com.example.yeseul.movieapp.pojo.Movie;
-import com.example.yeseul.movieapp.pojo.Review;
 import com.example.yeseul.movieapp.utils.KeyboardUtil;
 import com.example.yeseul.movieapp.view.BaseActivity;
+import com.example.yeseul.movieapp.view.custom.ReviewDialog;
 import com.example.yeseul.movieapp.view.review.ReviewActivity;
 
 public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresenter> implements MainContract.View {

@@ -4,7 +4,7 @@
     <data>
         <variable
             name="dialog"
-            type="com.example.yeseul.movieapp.view.main.ReviewDialog"/>
+            type="com.example.yeseul.movieapp.view.custom.ReviewDialog"/>
     </data>
 
     <LinearLayout
