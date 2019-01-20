@@ -4,11 +4,14 @@
     <!-- text size -->
     <dimen name="text_size_small">12sp</dimen>
     <dimen name="text_size_main">16sp</dimen>
+    <dimen name="text_size_large">20sp</dimen>
 
     <!-- padding -->
     <dimen name="padding_ultra_small">4dp</dimen>
+    <dimen name="padding_small">8dp</dimen>
     <dimen name="padding_main">16dp</dimen>
 
-    <!-- search box -->
+    <!-- button size -->
+    <dimen name="button_size_main">40dp</dimen>
 
 </resources>

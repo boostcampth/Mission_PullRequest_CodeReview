@@ -1,5 +1,6 @@
 package com.example.yeseul.movieapp.view.main;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,6 +17,7 @@ import com.example.yeseul.movieapp.data.source.movie.MovieRepository;
 import com.example.yeseul.movieapp.databinding.ActivityMovieBinding;
 import com.example.yeseul.movieapp.utils.KeyboardUtil;
 import com.example.yeseul.movieapp.view.BaseActivity;
+import com.example.yeseul.movieapp.view.image.ImageActivity;
 
 public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresenter> implements MainContract.View {
 
@@ -54,6 +56,9 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
         binding.recyclerMovie.setEmptyView(binding.emptyView);
         binding.recyclerMovie.setNestedScrollingEnabled(false);
         binding.recyclerMovie.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+
+        // 리사이클러 뷰 내의 이미지 클릭 이벤트 리스너 등록
+        adapter.setOnImageClickListener(this::startImageActivity);
 
         // 최하단 스크롤 감지
         binding.recyclerMovie.setOnScrollListener(new RecyclerView.OnScrollListener(){
@@ -117,5 +122,14 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
                 .build();
 
         customTabsIntent.launchUrl(this, Uri.parse(linkUrl));
+    }
+
+    /**
+     * 이미지 상세 보기 화면 띄우기 */
+    private void startImageActivity(int position) {
+        presenter.saveMovieList();
+        Intent intent = new Intent(getApplicationContext(), ImageActivity.class);
+        intent.putExtra(ImageActivity.EXTRA_IMAGE_POSITION, position);
+        startActivity(intent);
     }
 }

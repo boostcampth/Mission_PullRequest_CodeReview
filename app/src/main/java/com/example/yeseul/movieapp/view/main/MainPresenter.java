@@ -73,6 +73,11 @@ public class MainPresenter implements MainContract.Presenter {
         this.adapterModel = adapterModel;
     }
 
+    @Override
+    public void saveMovieList() {
+        repository.setSavedMovieList(adapterModel.getItemList());
+    }
+
     @SuppressLint("CheckResult")
     private void getMovieList(){
 
