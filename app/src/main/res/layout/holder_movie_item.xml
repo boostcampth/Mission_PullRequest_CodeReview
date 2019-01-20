@@ -38,14 +38,15 @@
                 android:lineSpacingExtra="@dimen/padding_ultra_small"
                 boldText="@{item.title}"/>
 
+            <!-- boldText 와 동일하게 변경-->
             <RatingBar
                 style="@style/ratingBar"
                 android:layout_marginTop="@dimen/padding_ultra_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:rating="@{item.userRating}"
                 android:stepSize="0.5"
-                android:numStars="5"/>
+                android:numStars="5"
+                rating="@{item.userRating}"/>
 
             <TextView
                 android:layout_marginTop="@dimen/padding_ultra_small"

@@ -4,6 +4,9 @@ import android.content.Context;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+
+/*
+ * Keyboard Open, Close Command Handle */
 public class KeyboardUtil {
 
     public static void closeKeyboard(Context context, EditText editText){

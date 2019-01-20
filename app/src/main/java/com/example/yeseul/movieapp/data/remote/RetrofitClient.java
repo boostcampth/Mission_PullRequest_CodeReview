@@ -15,7 +15,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
 
     private static final String BASE_URL = "https://openapi.naver.com/v1/";
-
     private static final String CLIENT_ID = "uMJDm4Jz6qzLyQPT5KK9";
     private static final String CLIENT_SECRET = "DxWswCSZ20";
 
