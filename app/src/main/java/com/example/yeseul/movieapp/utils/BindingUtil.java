@@ -7,6 +7,7 @@ import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -35,4 +36,8 @@ public class BindingUtil {
         textView.setText(Html.fromHtml(text));
     }
 
+    @BindingAdapter({"check"})
+    public static void setCheck(ImageView imageView, Boolean check) {
+        imageView.setSelected(check);
+    }
 }

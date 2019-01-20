@@ -1,46 +1,44 @@
-package com.example.yeseul.movieapp.pojo;
+package com.example.yeseul.movieapp.db;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import android.arch.persistence.room.Entity;
+import android.support.annotation.NonNull;
 
-public class Movie {
+import com.example.yeseul.movieapp.pojo.Movie;
 
-    @SerializedName("title")
-    @Expose
+@Entity(tableName = "favorite-movie", primaryKeys = {"title", "director"})
+public class FavoriteEntity {
+    @NonNull
     private String title;
-
-    @SerializedName("link")
-    @Expose
     private String linkUrl;
-
-    @SerializedName("image")
-    @Expose
     private String imageUrl;
-
-    @SerializedName("subtitle")
-    @Expose
     private String subtitle;
-
-    @SerializedName("pubDate")
-    @Expose
     private String pubDate;
-
-    @SerializedName("director")
-    @Expose
+    @NonNull
     private String director;
-
-    @SerializedName("actor")
-    @Expose
     private String actor;
-
-    @SerializedName("userRating")
-    @Expose
     private String userRating;
 
-    /**
-     * Selector 체크 확인
-     */
-    private boolean isChecked;
+    public FavoriteEntity(Movie movie) {
+        this.title = movie.getTitle();
+        this.linkUrl = movie.getLinkUrl();
+        this.imageUrl = movie.getImageUrl();
+        this.subtitle = movie.getSubtitle();
+        this.pubDate = movie.getPubDate();
+        this.director = movie.getDirector();
+        this.actor = movie.getActor();
+        this.userRating = movie.getUserRating();
+    }
+
+    public FavoriteEntity(String title, String linkUrl, String imageUrl, String subtitle, String pubDate, String director, String actor, String userRating) {
+        this.title = title;
+        this.linkUrl = linkUrl;
+        this.imageUrl = imageUrl;
+        this.subtitle = subtitle;
+        this.pubDate = pubDate;
+        this.director = director;
+        this.actor = actor;
+        this.userRating = userRating;
+    }
 
     public String getTitle() {
         return title;
@@ -104,13 +102,5 @@ public class Movie {
 
     public void setUserRating(String userRating) {
         this.userRating = userRating;
-    }
-
-    public boolean isChecked() {
-        return isChecked;
-    }
-
-    public void setChecked(boolean checked) {
-        isChecked = checked;
     }
 }

@@ -197,14 +197,6 @@ public abstract class BaseRecyclerAdapter<T, H extends RecyclerView.ViewHolder> 
                 onItemClickListener.onItemLongClick(position);
                 return true;
             });
-
-            ImageView favoriteButton = holder.itemView.findViewById(R.id.btn_favorite);
-
-            favoriteButton.setOnClickListener(view -> {
-                onItemClickListener.onFavoriteClick(position, !favoriteButton.isSelected());
-                if (favoriteButton.isSelected()) favoriteButton.setSelected(false);
-                else favoriteButton.setSelected(true);
-            });
         }
 
         onBindView((H) holder, position);

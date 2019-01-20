@@ -11,4 +11,5 @@
     <string name="str_viewholder_pubdate">개봉박두</string>
     <string name="str_viewholder_director">감독</string>
     <string name="str_viewholder_actor">배우</string>
+    <string name="str_menu_favorite">즐겨찾기</string>
 </resources>

@@ -2,13 +2,16 @@ package com.example.yeseul.movieapp.view.main;
 
 import android.annotation.SuppressLint;
 import android.databinding.ObservableBoolean;
-import android.databinding.ObservableField;
 
 import com.example.yeseul.movieapp.data.source.movie.MovieRepository;
+import com.example.yeseul.movieapp.db.AppDatabase;
+import com.example.yeseul.movieapp.db.FavoriteEntity;
 import com.example.yeseul.movieapp.mapper.MovieMapper;
 import com.example.yeseul.movieapp.pojo.Movie;
 import com.example.yeseul.movieapp.view.adapter.AdapterContract;
 import com.example.yeseul.movieapp.view.adapter.OnItemClickListener;
+import com.example.yeseul.movieapp.view.asynctask.FavoriteCheckAsyncTask;
+import com.example.yeseul.movieapp.view.asynctask.FavoriteQueryAsyncTask;
 
 import java.util.List;
 
@@ -42,14 +45,14 @@ public class MainPresenter implements MainContract.Presenter {
     public void loadItems(boolean isRefresh) {
 
         // refresh true 의 경우 초기화
-        if (isRefresh){
+        if (isRefresh) {
             currentPage = 0;
             isEndOfPage = false;
             adapterModel.clearItems();
         }
 
         // 마지막 페이지가 아니고 로딩중 아닌 경우 getMovieList 호출
-        if(!isLoading.get() && !isEndOfPage) {
+        if (!isLoading.get() && !isEndOfPage) {
             getMovieList();
         }
     }
@@ -79,8 +82,15 @@ public class MainPresenter implements MainContract.Presenter {
             public void onFavoriteClick(int position, boolean isExist) {
                 view.favoriteMovie();
 
-                // MainPresenter.this.adapterModel.getItem(position)
-                // 이곳에서 db 추가/삭제 작업
+                Movie movie = MainPresenter.this.adapterModel.getItem(position);
+                movie.setTitle(android.text.Html.fromHtml(movie.getTitle()).toString());
+                movie.setChecked(true);
+
+                if (!isExist) {
+                    FavoriteQueryAsyncTask.insert(AppDatabase.getInstance(view.getContext())).execute(new FavoriteEntity(movie));
+                } else {
+                    FavoriteQueryAsyncTask.delete(AppDatabase.getInstance(view.getContext())).execute(new FavoriteEntity(movie));
+                }
             }
         });
     }
@@ -91,7 +101,7 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @SuppressLint("CheckResult")
-    private void getMovieList(){
+    private void getMovieList() {
 
         isLoading.set(true);
 
@@ -104,7 +114,7 @@ public class MainPresenter implements MainContract.Presenter {
 
                     List<Movie> movieList = response.getMovieList();
 
-                    if(movieList.size() == 0){ // 검색 결과가 없는 경우
+                    if (movieList.size() == 0) { // 검색 결과가 없는 경우
                         // 페이지 끝 flag ON
                         isEndOfPage = true;
                         // 뷰에 알리기
@@ -117,8 +127,8 @@ public class MainPresenter implements MainContract.Presenter {
                         isEndOfPage = true;
                     }
 
-                    // 어댑터에 리스트 추가
-                    adapterModel.addItems(movieList);
+                    FavoriteCheckAsyncTask task = new FavoriteCheckAsyncTask(AppDatabase.getInstance(view.getContext()), list -> adapterModel.addItems(list));
+                    task.execute(movieList);
 
                 }, error -> {
 
