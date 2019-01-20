@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 
+import com.example.yeseul.movieapp.data.model.SearchMovieResponse;
 import com.example.yeseul.movieapp.data.source.movie.MovieRepository;
 import com.example.yeseul.movieapp.mapper.MovieMapper;
 import com.example.yeseul.movieapp.pojo.Movie;
@@ -11,6 +12,7 @@ import com.example.yeseul.movieapp.view.adapter.AdapterContract;
 
 import java.util.List;
 
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class MainPresenter implements MainContract.Presenter {
@@ -64,6 +66,8 @@ public class MainPresenter implements MainContract.Presenter {
         this.adapterView = adapterView;
         this.adapterView.setOnItemClickListener(position ->
                 view.startMovieDetailPage(this.adapterModel.getItem(position).getLinkUrl()));
+        this.adapterView.setOnItemLongClickListener(position ->
+                view.startSimpleView(this.adapterModel.getItem(position).getLinkUrl(), this.adapterModel.getItem(position).getTitle()));
     }
 
     @Override

@@ -1,11 +1,13 @@
 package com.example.yeseul.movieapp.view.adapter;
 
+import android.widget.AdapterView;
+
 import java.util.List;
 
 public interface AdapterContract {
 
     interface View {
-
+        void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener);
         void setOnItemClickListener(OnItemClickListener itemClickListener);
     }
 

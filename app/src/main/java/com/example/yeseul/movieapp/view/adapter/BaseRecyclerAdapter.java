@@ -3,6 +3,9 @@ package com.example.yeseul.movieapp.view.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +14,7 @@ public abstract class BaseRecyclerAdapter<T, H extends RecyclerView.ViewHolder> 
 
     protected List<T> itemList;
     protected OnItemClickListener onItemClickListener;
+    protected OnItemLongClickListener onItemLongClickListener;
     protected Context context;
 
     public BaseRecyclerAdapter(Context context){
@@ -24,6 +28,11 @@ public abstract class BaseRecyclerAdapter<T, H extends RecyclerView.ViewHolder> 
 
     public Context getContext(){
         return context;
+    }
+
+    @Override
+    public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
+        this.onItemLongClickListener = onItemLongClickListener;
     }
 
     @Override
@@ -191,6 +200,14 @@ public abstract class BaseRecyclerAdapter<T, H extends RecyclerView.ViewHolder> 
                 onItemClickListener.onItemClick(position);
             }
 
+        });
+
+        holder.itemView.setOnLongClickListener( view -> {
+            if(onItemLongClickListener != null) {
+                Log.d("log", "long touch");
+                onItemLongClickListener.onItemLongClick(position);
+            }
+            return true;
         });
 
         onBindView((H) holder, position);
