@@ -1,5 +1,7 @@
 package com.example.yeseul.movieapp.view.main;
 
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,12 +16,16 @@ import android.view.inputmethod.EditorInfo;
 import com.example.yeseul.movieapp.R;
 import com.example.yeseul.movieapp.data.source.movie.MovieRepository;
 import com.example.yeseul.movieapp.databinding.ActivityMovieBinding;
+import com.example.yeseul.movieapp.pojo.Movie;
 import com.example.yeseul.movieapp.utils.KeyboardUtil;
 import com.example.yeseul.movieapp.view.BaseActivity;
+import com.example.yeseul.movieapp.view.custom.ReviewDialog;
+import com.example.yeseul.movieapp.view.review.ReviewActivity;
 
 public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresenter> implements MainContract.View {
 
     private MovieListAdapter adapter;
+    private static Context context;
 
     @Override
     protected int getLayoutId() {
@@ -34,6 +40,7 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = getApplicationContext();
 
         adapter = new MovieListAdapter(this);
         presenter.setAdapterView(adapter);
@@ -42,7 +49,6 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
         binding.setPresenter(presenter);
 
         initView();
-
         presenter.onViewCreated();
     }
 
@@ -75,8 +81,12 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
             return false;
         });
 
+
         // 검색 버튼 리스너 등록
         binding.searchBox.btnSubmit.setOnClickListener(v -> onSearchButtonClicked());
+
+        //플로팅 리뷰버튼 리스너
+        binding.buttonReview.setOnClickListener(v -> onReviewButtonClicked());
     }
 
     /**
@@ -95,6 +105,15 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
         } else {
             makeToast(getString(R.string.search_hint));
         }
+    }
+
+    /**
+     *  리뷰 목록 버튼을 눌렀을 때
+     */
+    public void onReviewButtonClicked() {
+        //리뷰리스트 화면으로 이동
+        Intent intent = new Intent(MainActivity.this, ReviewActivity.class);
+        startActivity(intent);
     }
 
     /**
@@ -117,5 +136,25 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
                 .build();
 
         customTabsIntent.launchUrl(this, Uri.parse(linkUrl));
+    }
+
+    /**
+     * 영화 리뷰 남기는 다이얼로그 설정
+     */
+    @Override
+    public void startReviewPage(Movie movie) {
+        Bundle bundle = new Bundle();
+        bundle.putString("link", movie.getLinkUrl());
+        bundle.putString("imgUrl", movie.getImageUrl());
+        bundle.putString("title", movie.getTitle());
+
+        ReviewDialog reviewDialog = new ReviewDialog();
+        reviewDialog.setArguments(bundle);
+        reviewDialog.setListener(presenter);
+        reviewDialog.show(getSupportFragmentManager(), "review");
+    }
+
+    public static Context getContext() {
+        return context;
     }
 }

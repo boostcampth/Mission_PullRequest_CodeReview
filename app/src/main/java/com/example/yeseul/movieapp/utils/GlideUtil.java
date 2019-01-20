@@ -1,6 +1,7 @@
 package com.example.yeseul.movieapp.utils;
 
 import android.databinding.BindingAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.yeseul.movieapp.R;

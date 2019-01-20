@@ -1,12 +1,17 @@
 package com.example.yeseul.movieapp.view.main;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.example.yeseul.movieapp.data.source.movie.MovieRepository;
+import com.example.yeseul.movieapp.data.sqlite.DatabaseHelper;
 import com.example.yeseul.movieapp.mapper.MovieMapper;
 import com.example.yeseul.movieapp.pojo.Movie;
+import com.example.yeseul.movieapp.pojo.Review;
 import com.example.yeseul.movieapp.view.adapter.AdapterContract;
 
 import java.util.List;
@@ -21,6 +26,7 @@ public class MainPresenter implements MainContract.Presenter {
     private MovieRepository repository;
     private AdapterContract.View adapterView;
     private AdapterContract.Model<Movie> adapterModel;
+    private DatabaseHelper db;
 
     private String searchKey = ""; // 검색 키워드
     private final int PAGE_UNIT = 20; // 한번에 가져올 데이터 개수
@@ -62,8 +68,11 @@ public class MainPresenter implements MainContract.Presenter {
     @Override
     public void setAdapterView(AdapterContract.View adapterView) {
         this.adapterView = adapterView;
-        this.adapterView.setOnItemClickListener(position ->
-                view.startMovieDetailPage(this.adapterModel.getItem(position).getLinkUrl()));
+        this.adapterView.setOnItemClickListener(position -> {
+                //view.startMovieDetailPage(this.adapterModel.getItem(position).getLinkUrl()));
+                view.startReviewPage(this.adapterModel.getItem(position));
+
+        });
     }
 
     @Override
@@ -111,4 +120,17 @@ public class MainPresenter implements MainContract.Presenter {
                     view.onSearchResultEmpty(searchKey);
                 });
     }
+
+    @Override
+    public void onReviewOKButtonClick(Review review) {
+        db = new DatabaseHelper(MainActivity.getContext());
+        boolean isReviewed = db.isReviewed(review.getLinkUrl());
+
+        if (isReviewed) {db.updateReview(review);
+        Log.d("리뷰가 찍힌적이 있음", " ");}
+        else db.insertReview(review);
+        Toast.makeText(MainActivity.getContext(), "코멘트를 남기셨습니다.", Toast.LENGTH_SHORT).show();
+    }
+
+
 }

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="review"
+            type="com.example.yeseul.movieapp.pojo.Review"/>
+        <variable
+            name="presenter"
+            type="com.example.yeseul.movieapp.view.main.MainPresenter"/>
+    </data>
+
+    <LinearLayout
+        android:padding="@dimen/padding_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+    <ImageView
+        android:layout_width="75dp"
+        android:layout_height="100dp"
+        imageCenterCrop="@{review.imageUrl}"/>
+
+    <LinearLayout
+        android:layout_marginLeft="@dimen/padding_main"
+        android:layout_marginStart="@dimen/padding_main"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_main"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:lineSpacingExtra="@dimen/padding_ultra_small"
+            boldText="@{review.title}"/>
+
+        <RatingBar
+            style="@style/ratingBar"
+            android:layout_marginTop="@dimen/padding_ultra_small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:myrating="@{review.myRating}"
+            android:stepSize="0.5"
+            android:numStars="5"/>
+
+        <TextView
+            android:layout_marginTop="@dimen/padding_ultra_small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:textSize="@dimen/text_size_small"
+            android:textColor="@android:color/black"
+            boldText="@{review.myComment}"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

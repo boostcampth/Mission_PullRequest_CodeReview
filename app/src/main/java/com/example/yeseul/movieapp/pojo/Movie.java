@@ -100,4 +100,5 @@ public class Movie {
     public void setUserRating(String userRating) {
         this.userRating = userRating;
     }
+
 }
