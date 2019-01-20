@@ -1,29 +1,18 @@
-package com.example.yeseul.movieapp.view.main;
+package com.example.yeseul.movieapp.view.favorite;
 
-import com.example.yeseul.movieapp.pojo.Movie;
+import com.example.yeseul.movieapp.db.FavoriteEntity;
 import com.example.yeseul.movieapp.view.BasePresenter;
 import com.example.yeseul.movieapp.view.BaseView;
 import com.example.yeseul.movieapp.view.adapter.AdapterContract;
 
-public interface MainContract {
-
+public interface FavoriteContract {
     interface View extends BaseView {
-
-        void onSearchResultEmpty(String searchKey);
-
         void startMovieDetailPage(String linkUrl);
-
         void shareMovieDetail(String title, String linkUrl);
-
-        void favoriteMovie();
     }
 
     interface Presenter extends BasePresenter {
-
-        void onSearchButtonClicked(String searchKey);
-
         void setAdapterView(AdapterContract.View adapterView);
-
-        void setAdapterModel(AdapterContract.Model<Movie> adapterModel);
+        void setAdapterModel(AdapterContract.Model<FavoriteEntity> adapterModel);
     }
 }

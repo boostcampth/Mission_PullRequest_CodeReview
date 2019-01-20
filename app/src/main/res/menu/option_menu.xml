@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/star"
+        android:icon="@drawable/ic_option_menu_star"
+        android:title="@string/str_menu_favorite"
+        app:showAsAction="always" />
+</menu>

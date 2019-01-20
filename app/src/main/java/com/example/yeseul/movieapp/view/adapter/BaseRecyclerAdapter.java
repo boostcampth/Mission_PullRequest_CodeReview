@@ -3,6 +3,9 @@ package com.example.yeseul.movieapp.view.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ImageView;
+
+import com.example.yeseul.movieapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -184,14 +187,17 @@ public abstract class BaseRecyclerAdapter<T, H extends RecyclerView.ViewHolder> 
     @SuppressWarnings("unchecked")
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
 
-        holder.itemView.setOnClickListener(view -> {
-
-            // item click listener 등록
-            if(onItemClickListener != null) {
+        if (onItemClickListener != null) {
+            holder.itemView.setOnClickListener(view -> {
+                // item click listener 등록
                 onItemClickListener.onItemClick(position);
-            }
+            });
 
-        });
+            holder.itemView.setOnLongClickListener(view -> {
+                onItemClickListener.onItemLongClick(position);
+                return true;
+            });
+        }
 
         onBindView((H) holder, position);
     }
