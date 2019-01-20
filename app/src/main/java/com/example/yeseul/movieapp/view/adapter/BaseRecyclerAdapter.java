@@ -3,6 +3,11 @@ package com.example.yeseul.movieapp.view.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.ScaleAnimation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -194,7 +199,23 @@ public abstract class BaseRecyclerAdapter<T, H extends RecyclerView.ViewHolder> 
         });
 
         onBindView((H) holder, position);
+        // 바인딩 된 아이템 애니메이션 세팅
+        setAnimation(holder.itemView);
     }
 
+    private void setAnimation(View view) {
+        ScaleAnimation scaleAnimation = new ScaleAnimation(
+                0.6f, 1.0f, 0.6f, 1.0f,
+                Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f);
+
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
+
+        AnimationSet animationSet = new AnimationSet(true);
+        animationSet.setDuration(700);              // 애니메이션 지속 시간 700ms
+        animationSet.addAnimation(scaleAnimation);  // 스케일 애니메이션 추가
+        animationSet.addAnimation(alphaAnimation);  // 페이드 애니메이션 추가
+        view.startAnimation(animationSet);
+    }
     protected abstract void onBindView(H holder, int position);
 }

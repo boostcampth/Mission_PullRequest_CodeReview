@@ -27,9 +27,6 @@ public class EmptyRecyclerView extends RecyclerView {
             emptyView.setVisibility(getAdapter() == null || getAdapter().getItemCount() == 0 ? VISIBLE : GONE);
             EmptyRecyclerView.this.setVisibility(getAdapter() == null || getAdapter().getItemCount() == 0 ? GONE : VISIBLE);
         }
-        if(getAdapter() != null){
-            setItemViewCacheSize(getAdapter().getItemCount());
-        }
     }
 
     final AdapterDataObserver observer = new AdapterDataObserver() {
