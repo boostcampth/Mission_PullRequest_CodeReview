@@ -14,8 +14,10 @@ import android.view.inputmethod.EditorInfo;
 import com.example.yeseul.movieapp.R;
 import com.example.yeseul.movieapp.data.source.movie.MovieRepository;
 import com.example.yeseul.movieapp.databinding.ActivityMovieBinding;
+import com.example.yeseul.movieapp.pojo.Movie;
 import com.example.yeseul.movieapp.utils.KeyboardUtil;
 import com.example.yeseul.movieapp.view.BaseActivity;
+
 
 public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresenter> implements MainContract.View {
 
@@ -117,5 +119,12 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
                 .build();
 
         customTabsIntent.launchUrl(this, Uri.parse(linkUrl));
+    }
+
+    /**
+     * 현재 창 안에 Dialog를 이용한 웹 사이트 출력 */
+    @Override
+    public void startSimpleView(String linkUrl, String movieTitle) {
+        showDialog(linkUrl, movieTitle);
     }
 }
