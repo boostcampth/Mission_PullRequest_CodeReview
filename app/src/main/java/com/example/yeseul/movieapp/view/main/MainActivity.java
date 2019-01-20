@@ -125,6 +125,6 @@ public class MainActivity extends BaseActivity<ActivityMovieBinding, MainPresent
      * 현재 창 안에 Dialog를 이용한 웹 사이트 출력 */
     @Override
     public void startSimpleView(String linkUrl, String movieTitle) {
-        showDialog(linkUrl);
+        showDialog(linkUrl, movieTitle);
     }
 }
