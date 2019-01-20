@@ -32,11 +32,11 @@ public abstract class BaseActivity<B extends ViewDataBinding, P extends BasePres
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 
-    public void showDialog(String linkUrl) {
+    public void showDialog(String linkUrl, String movieTitle) {
         WebView webView = new WebView(this);
         webView.setScrollbarFadingEnabled(false);
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setUserAgentString("AndroidWebView");
+        webView.getSettings().setUserAgentString(movieTitle);
         webView.clearCache(true);
         webView.loadUrl(linkUrl);
 
